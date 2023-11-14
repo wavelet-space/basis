@@ -1,3 +1,8 @@
+"""
+This module contains all the things shared across projects.
+"""
+
+
 def flatten(json: str | dict, separator="."):
     """
     Flatten a nested structure such as JSON or dictionary.
