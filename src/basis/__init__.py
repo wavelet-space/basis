@@ -2,6 +2,8 @@
 This module contains all the things shared across projects.
 """
 
+__all__ = ["flatten", "expand"]
+
 
 def flatten(json: str | dict, separator="."):
     """
