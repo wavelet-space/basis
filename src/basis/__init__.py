@@ -5,9 +5,12 @@ This module contains all the things shared across projects.
 __all__ = ["flatten", "expand"]
 
 
-def flatten(json: str | dict, separator="."):
+def flatten(data: str | dict, separator="."):
     """
     Flatten a nested structure such as JSON or dictionary.
+
+    :param data: A hierarchical data e.g array of objects in JSON.
+    :returns: A flattened collection of records.
 
     .. seealso:: :func:`expand`
 
@@ -32,6 +35,9 @@ def flatten(json: str | dict, separator="."):
 def expand(data, separator="."):
     """
     Expand a flattened structure.
+
+    :param data: A flat collection of records.
+    :returns: 
 
     >>> data = [{'a[0]': 1, 'a[1]': 2, 'a[2]': 3, 'b_a': 1, 'b_b': 2, 'b_c_a': 1, 'b_c_b': 2}]
     >>> expand(data, separator="_")
