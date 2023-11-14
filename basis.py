@@ -1,4 +1,4 @@
-def flatten(json: str | dict):
+def flatten(json: str | dict, separator="."):
     """
     Flatten a nested structure such as JSON or dictionary.
 
@@ -11,19 +11,24 @@ def flatten(json: str | dict):
     ...         'b': 2,
     ...         'c': {
     ...             'a': 1,
-    ...             'b': 2,
+    ...             'b': 2
     ...         }
     ...     }
     ... ]}
     >>> flatten(data)
-    aa_0, a_1, a_2, b_a, b_b, b_c_a, b_c_b,
+    [{'a[0]': 1, 'a[1]': 2, 'a[2]': 3, 'b.a': 1, 'b.b': 2, 'b.c.a': 1, 'b.c.b': 2}]
+    >>> flatten(data, separator="_")
+    [{'a[0]': 1, 'a[1]': 2, 'a[2]': 3, 'b_a': 1, 'b_b': 2, 'b_c_a': 1, 'b_c_b': 2}]
     """
 
 
-def expand():
+def expand(data, separator="."):
     """
     Expand a flattened structure.
-
+    
+    >>> data = [{'a[0]': 1, 'a[1]': 2, 'a[2]': 3, 'b_a': 1, 'b_b': 2, 'b_c_a': 1, 'b_c_b': 2}]
+    >>> expand(data, separator="_")
+    [{'a': [1, 2, 3], 'b': {'a': 1, 'b': 2, 'c': {'a': 1, 'b': 2}}]}
     """
 
 
