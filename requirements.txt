@@ -2,3 +2,4 @@ ruff
 pytest
 sphinx
 sphinx-autoapi
+sphinx-rdt-theme
