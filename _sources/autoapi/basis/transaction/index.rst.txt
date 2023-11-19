@@ -1,0 +1,80 @@
+:py:mod:`basis.transaction`
+===========================
+
+.. py:module:: basis.transaction
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   basis.transaction.Transaction
+   basis.transaction.PostgreSQLTransaction
+   basis.transaction.FileSystemTransaction
+
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   basis.transaction.transactional
+
+
+
+.. py:class:: Transaction
+
+
+   Bases: :py:obj:`abc.ABC`
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+   .. py:method:: __enter__() -> Self
+      :abstractmethod:
+
+
+   .. py:method:: __exit__() -> None
+      :abstractmethod:
+
+
+
+.. py:function:: transactional()
+
+   A decorator for functions to run in transaction.
+
+
+.. py:class:: PostgreSQLTransaction
+
+
+   Bases: :py:obj:`Transaction`
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+   .. py:method:: __enter__() -> Self
+
+
+   .. py:method:: __exit__() -> None
+
+
+
+.. py:class:: FileSystemTransaction(path: pathlib.Path, timeout=42)
+
+
+   Bases: :py:obj:`Transaction`
+
+   An atomic operation for file system.
+
+   .. py:method:: __enter__() -> Self
+
+
+   .. py:method:: __exit__() -> None
+
+
+

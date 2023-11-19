@@ -1,0 +1,30 @@
+:py:mod:`basis.datetime`
+========================
+
+.. py:module:: basis.datetime
+
+.. autoapi-nested-parse::
+
+   This module contains date and time related functions.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   basis.datetime.timestamp_to_date
+
+
+
+.. py:function:: timestamp_to_date(timestamp: float) -> str
+
+   :param timestamp: A POSIX timestamp like `time.time()`.
+   :returns: An ISO 8601 formated date string.
+
+
