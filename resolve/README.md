@@ -54,9 +54,6 @@ Hypertext Transfer Protocol (HTTP) je slouží k ... a je založen na client-ser
 
 - DNS; TCP, TLS; UDP, IP
 
-
-
-
 ### Resources a URL
 
 - URI: URL, URN
