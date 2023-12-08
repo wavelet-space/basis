@@ -4,12 +4,40 @@ This module contains date and time related functions.
 
 from datetime import datetime
 
+
 def timestamp_to_date(timestamp: float) -> str:
     """
     :param timestamp: A POSIX timestamp like `time.time()`.
     :returns: An ISO 8601 formated date string.
     """
     return datetime.fromtimestamp(timestamp).strftime("%Y-%m-%d")
+
+
+def parse_date_cs(text: str) -> datetime.date:
+    """
+    Parse a Czech date string to :class:`datetime.date` type.
+
+    The name of month must be a valid Czech month name
+    Any case is allowed e.g. 'prosince', 'Prosince', 'PROSINEC' etc.
+
+    :parse text: A date string e.g.  '1. prosinec 2023'.
+    :returns: A date type e.g. '(2023, 12, 1)'.
+    """
+    day, month_name, year = text.split()
+
+    month_names = {
+        v: k + 1
+        for k, v in enumerate(
+            "leden únor březen duben květen červen červenec srpen září říjen listopad prosinec".split(),
+        )
+    }
+    result = datetime.date(
+        day=int(day.strip()[:-1]),
+        month=month_names[month_name.strip().lower()],
+        year=int(year.strip()),
+    )
+    return result
+
 
 # TODO
 
