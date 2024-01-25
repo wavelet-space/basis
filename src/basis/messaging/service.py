@@ -1,7 +1,7 @@
 from abc import abstractmethod
 from uuid import UUID
 
-from .actor import Actor
+from basis.messaging.actor import Actor
 
 
 class Service(Actor):
