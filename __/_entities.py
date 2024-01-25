@@ -6,8 +6,7 @@ The abstract classes to implements a _Repository pattern_.
 """
 
 
-from abc import ABC, abstractmethod
-from typing import TypeVar, Generic, Any
+from typing import TypeVar, Generic
 
 
 __all__ = tuple(["Id", "Entity"])

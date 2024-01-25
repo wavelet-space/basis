@@ -5,22 +5,23 @@ from typing import Self
 
 @dataclass(frozen=True, slots=True)
 class Range[T]:
-    
     minimum: T
     maximum: T
 
     @property
     def span(self) -> T:
         return abs(self.maximum - self.minimum)
-    
+
     def __post_init__(self):
         if self.minimum >= self.maximum:
             raise ValueError("Expected the maximum be greater then maximum.")
+
 
 class Natural:
     """
     A natural number :math:`\\mathbb{N}`.
     """
+
     def __init__(self, value: int | float) -> Self:
         if 0 > int(value):
             raise ValueError("Expected value be greater the zero.")
@@ -28,11 +29,11 @@ class Natural:
 
     @property
     def value(self):
-        return self._value    
+        return self._value
 
     def __hash__(self) -> int:
         return hash((type(self), self.value))
-    
+
     def __eq__(self, other) -> bool:
         return isinstance(self, type(self)) and self.value == other.value
 
@@ -45,7 +46,7 @@ if __name__ == "__main__":
     print(r, r.span)
     print(repr(r))
 
-    n = Natural(1) 
+    n = Natural(1)
     print(n)
 
 
@@ -77,7 +78,6 @@ if __name__ == "__main__":
 #         if current < previous:
 #             print(current, previous)
 #             raise ValueError("The i-th value must be greater the (i-1)-th value.")
-
 
 
 # class PositiveIntegerRange:

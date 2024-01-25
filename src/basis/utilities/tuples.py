@@ -12,7 +12,7 @@ class Pair[T]:
         return self.__values[0]
 
     @property
-    def second(self) ->T:
+    def second(self) -> T:
         return self.__values[1]
 
     def __eq__(self, that) -> bool:
@@ -21,9 +21,9 @@ class Pair[T]:
     def __hash__(self) -> int:
         return hash((type(self), self.first, self.second))
 
-    def __copy__(self, that) -> 'Pair':
+    def __copy__(self, that) -> "Pair":
         return type(self)(self.first, self.second)
-    
+
 
 if __name__ == "__main__":
     pair: Pair[int] = Pair(1, 2)

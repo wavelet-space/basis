@@ -2,9 +2,8 @@
 Wavelet WSGI application framework.
 """
 
-from typing import Self, Any, Callable
+from typing import Callable
 from enum import IntEnum
-from functools import singledispatch
 from argparse import ArgumentParser
 import sys
 from dataclasses import dataclass
@@ -12,6 +11,7 @@ from dataclasses import dataclass
 """
 This module contains HTTP status codes.
 """
+
 
 def is_informational_status_code(code: int) -> bool:
     return 100 <= code <= 199
@@ -37,6 +37,7 @@ class Status(IntEnum):
     """
     The HTTP status titles and codes.
     """
+
     CONTINUE = 100
     SWITCHING_PROTOCOLS = 101
     OK = 200
@@ -49,7 +50,7 @@ class Status(IntEnum):
     MULTI_STATUS = 207
     ALREADY_REPORTED = 208
     IM_USED = 226
-    MULTIPLE_CHOICES = 300 
+    MULTIPLE_CHOICES = 300
     MOVED_PERMANENTLY = 301
     FOUND = 302
     SEE_OTHER = 303
@@ -104,9 +105,7 @@ class Request:
     Request encapsulates the client data send via HTTP protocol.
     """
 
-    methods = (
-        "GET", "POST", "PUT", "DELETE", "TRACE", "CONNECT", "OPTIONS"
-    )
+    methods = ("GET", "POST", "PUT", "DELETE", "TRACE", "CONNECT", "OPTIONS")
 
     def __init__(self, scheme: str, domain: str, encoding: str = "utf-8"):
         self._scheme = scheme
@@ -159,7 +158,7 @@ class Response:
 
     def __eq__(self, that: object) -> bool:
         if that is None or not isinstance(that, type(self)):
-            return False 
+            return False
 
         return (self.status_code, self.content) == (that.status_code, that.content)
 
@@ -167,18 +166,17 @@ class Response:
         return hash((type(self), self.status_code, self.content))
 
 
-
-
 @dataclass(frozen=True, slots=True)
 class Header:
     ...
 
-@dataclass(frozen=True,  slots=True)
+
+@dataclass(frozen=True, slots=True)
 class RequestHeader(Header):
     ...
-    
 
-@dataclass(frozen=True,  slots=True)
+
+@dataclass(frozen=True, slots=True)
 class ResponseHeader(Header):
     ...
 
@@ -189,10 +187,9 @@ class URL:
     port: int
 
 
-
-def cli(arguments):    
+def cli(arguments):
     parser = ArgumentParser()
-    
+
     parser.add_argument("--version", action="store_true", help="Show version number.")
     parser.add_argument("-p", "--port", action="store_true", help="Port")
 
@@ -201,9 +198,12 @@ def cli(arguments):
 # Exceptions
 # ########################################################################## #
 
+
 class WaveletException(Exception):
     """A base class exception."""
+
     pass
+
 
 # ########################################################################## #
 
@@ -221,32 +221,32 @@ class Middleware:
         ...
 
 
-
 class Wavelet:
     """
-    The WSGI application. 
+    The WSGI application.
     """
 
     def __init__(self) -> None:
         self.routes = {
-            "...": lambda x: x, # handler
+            "...": lambda x: x,  # handler
         }
 
     def register_controler(self):
         ...
 
     def __call__(self, environment: dict[str, str], start_response: Callable):
-        
         body = f"Request method: {environment['REQUEST_METHOD']}"
 
-        environment_items = "\n".join([f"{k}, {v}" for k, v in sorted(environment.items())])
-    
+        environment_items = "\n".join(
+            [f"{k}, {v}" for k, v in sorted(environment.items())]
+        )
+
         # HTTP_*
         # SERVER_*
         # wsgi.*
-        
+
         headers = [
-            ('Content-Type', 'text/plain; charset=utf-8'),
+            ("Content-Type", "text/plain; charset=utf-8"),
             ("Content-Length", str(len(body + environment_items))),
         ]
         status = "200 OK"
@@ -256,14 +256,12 @@ class Wavelet:
 
 
 if __name__ == "__main__":
-
     arguments = sys.argv
 
     from wsgiref.simple_server import make_server
-    
+
     wavelet = Wavelet()
 
-    with make_server(host='localhost', port=8051, app=wavelet) as server:
+    with make_server(host="localhost", port=8051, app=wavelet) as server:
         print("Running on localhost:8051")
         server.serve_forever()
-        

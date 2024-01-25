@@ -2,8 +2,6 @@
 This module contais function and classes to generate, document, and migrate project.
 """
 
-from uuid import UUID
-
 
 __all__ = "Documentation"
 
@@ -16,4 +14,3 @@ class Diagram:
 class Documentation:
     def __init__(self):
         ...
-

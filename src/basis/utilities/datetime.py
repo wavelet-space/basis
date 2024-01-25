@@ -42,7 +42,7 @@ def parse_date_cs(text: str) -> datetime.date:
 # TODO
 
 # tell what time it is somewhere or what some time is somewhere
-# e.g 
+# e.g
 # NOW
 # Time	11:11:57 (0 seconds — late morning)
 # Date	2023-11-17

@@ -1,5 +1,3 @@
-
-
 class Credentials:
     """
     e.g PostgreSQL credentials.

@@ -10,14 +10,13 @@ from abc import ABC, abstractmethod, abstractclassmethod
 from typing import Iterable, TypeVar, Generic, Any, Optional
 
 
-from essence.core._entities import Entity
 
 
 T = TypeVar("T")  # Entity type
 Id = TypeVar("Id")
 
 
-from uuid import UUID # vs SafeUUID?
+from uuid import UUID  # vs SafeUUID?
 
 
 class StoreException(Exception):

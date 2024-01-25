@@ -1,0 +1,90 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "basis"
+authors = [
+    {name="David Landa", email="david.landa@proton.me" }
+]
+maintainers = [
+    {name="David Landa", email="david.landa@proton.me" }
+]
+description = "The ordering service bounded context."
+dynamic = ["version", "readme"]
+requires-python = ">=3.12"
+license = {text = "MIT"}
+
+dependencies = [
+]
+
+classifiers = [
+    "Programming Language :: Python :: 3.12",
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Natural Language :: English",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[tool.setuptools_scm]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+namespaces = false
+
+[tool.setuptools.package-data]
+orders = ["*.sql"]
+
+#[project.scripts]
+#basis = "basis.__main__:main"
+
+[tool.setuptools.dynamic]
+readme = {file = ["README.md"]}
+
+[tool.ruff]
+extend-include = ["*.ipynb"]
+
+# Assume Python 3.12
+target-version = "py312"
+
+exclude = [
+    "docs",
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "venv",
+    "__",
+]
+
+[tool.pytest.ini_options]
+markers = [
+    "domain: marks tests as domain (deselect with '-m \"not domain\"')",
+    "service",
+]
+
+[tool.mypy]
+ignore_missing_imports = true
+show_error_codes = true
+warn_unused_ignores = true
+warn_unused_configs = true
+namespace_packages = true
+explicit_package_bases = true
+show_column_numbers = true

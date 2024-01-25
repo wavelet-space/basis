@@ -1,11 +1,7 @@
-__all__ = ("Actor",)
-
-
-from typing import Any
-
-
-from uuid import UUID
 from abc import ABC, abstractmethod
+from typing import TypeVar, Generic
+
+__all__ = ("Actor",)
 
 
 class Actor(ABC):
@@ -26,8 +22,6 @@ class Agent(Actor):
     An alias for actor.
     """
 
-
-from typing import TypeVar, Generic
 
 T = TypeVar("T")
 U = TypeVar("U")

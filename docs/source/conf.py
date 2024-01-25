@@ -27,11 +27,11 @@ html_theme = "sphinx_rtd_theme"
 html_static_path = ["_static"]
 
 
-scm_contribs_email = "true"          # Show email. Default: "true"
+scm_contribs_email = "true"  # Show email. Default: "true"
 scm_contribs_limit_contributors = None  # Limit number of contributors. Use None
-                                               # to deactivate. Default: None
-scm_contribs_min_commits = 1                 # Filter by number of commits. Default: 0
-scm_contribs_sort = "num"             # Sort by name or number of commits.
-                                               # Default: "name"
-scm_contribs_type ="committer"     # Show info of author or committer.
-                                               # Default: "author"
+# to deactivate. Default: None
+scm_contribs_min_commits = 1  # Filter by number of commits. Default: 0
+scm_contribs_sort = "num"  # Sort by name or number of commits.
+# Default: "name"
+scm_contribs_type = "committer"  # Show info of author or committer.
+# Default: "author"
