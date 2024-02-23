@@ -66,7 +66,7 @@ class AbstractRepository(Generic[Entity, Identifier]):
 
     def __enter__(self) -> Self:
         return self
-
+        
     def __exit__(self, error_type, error_value, traceback) -> None:
         if error_type:
             self._revert()
@@ -75,8 +75,11 @@ class AbstractRepository(Generic[Entity, Identifier]):
 
 
 class MemoryRepository(AbstractRepository[Entity, Identifier]):
+
+    storage = {}
+    
     def __init__(self, *entities) -> None:
-        self._storage = {e.identifier: e for e in entities}
+        MemoryRepository.storage |= {e.identifier: e for e in entities}
         self._current = []
 
     def save(self, entity) -> None:
