@@ -12,5 +12,5 @@ __all__ = tuple(("Environment"))
 
 
 class Environment(Singleton):
-    def __init__(self, *args):
+    def __init__(self, *args, **kwargs):
         self.args = args

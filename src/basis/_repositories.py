@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-
-
 """
 The abstract classes to implements a _Repository pattern_.
 """
@@ -10,8 +7,6 @@ from abc import ABC, abstractmethod, abstractclassmethod
 from typing import Iterable, TypeVar, Generic, Any, Optional
 
 
-
-
 T = TypeVar("T")  # Entity type
 Id = TypeVar("Id")
 
@@ -19,7 +14,7 @@ Id = TypeVar("Id")
 from uuid import UUID  # vs SafeUUID?
 
 
-class StoreException(Exception):
+class PersistenceError(Exception):
     def __init__(self, message, *errors):
         super().__init__(self, message)
         self.errors = errors
@@ -58,6 +53,7 @@ class Repository(Generic[T, Id]):
 
 
 class AbstractRepository(ABC, Generic[T]):
+
     def __init__(self, connection: Any):
         self.connection = connection  # connection pool?
 
