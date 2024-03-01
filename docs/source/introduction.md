@@ -1,6 +1,6 @@
 # Introduction
 
-Úvod do Domain-Driven Design
+Úvod do Domain-Driven Design.
 
 ## Bounded Context
 
