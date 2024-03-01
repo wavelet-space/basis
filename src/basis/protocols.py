@@ -15,7 +15,7 @@ class Singleton:
 
 class Versionable(Protocol):
     @property
-    def version(self):  # -> ?
+    def version(self) -> tuple[int, int, int]:
         ...
 
 

@@ -1,19 +1,22 @@
 """
-Abstractions around PEP 249 <https://peps.python.org/pep-0249/>_
+Abstraction as defined in PEP 249 <https://peps.python.org/pep-0249/>_.
 """
-
 
 from typing import Protocol
 
 
 class Cursor(Protocol):
-    # REQUIRED
+    """
+    A connection cursor object protocol.
+    """
 
     @property
-    def description(self): ...
+    def description(self):
+        ...
 
     @property
-    def rowcount(self) -> int: ...
+    def rowcount(self) -> int:
+        ...
 
     # execute()
     # execuremany()
@@ -27,12 +30,17 @@ class Cursor(Protocol):
 
 
 class CursorExtended(Cursor):
-    # OPTIONAL
+    """
+    A connection cursor object protocol with optional features.
+    """
+
     ...
 
 
 class Connection(Protocol):
-    """Represents a database connection."""
+    """
+    A database connection object.
+    """
 
     autocommit: bool
 

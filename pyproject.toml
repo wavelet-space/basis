@@ -79,6 +79,8 @@ markers = [
     "domain: marks tests as domain (deselect with '-m \"not domain\"')",
     "service",
 ]
+testpaths = ["tests"]
+
 
 [tool.mypy]
 ignore_missing_imports = true

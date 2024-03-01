@@ -2,16 +2,16 @@
 Modul obsahuje třídy abstrahující ukládání a načítání entit do/z úložiště (návrhový vzor repository).
 """
 
-from abc import abstractmethod, abstractclassmethod
-from typing import Generic, TypeVar, Any, Self
+from abc import abstractmethod
+from typing import Generic, TypeVar, Self
 
 from basis.persistence.interface import Connection
+from basis.aggregate import Identifier, Entity
 
 
-Entity = TypeVar("Entity", bound=Any)
+Entity = TypeVar("Entity", bound=Entity)
 """A domain entity type."""
-Identifier = TypeVar("Identifier", bound=Any)
-"""A domain entity identifier type."""
+
 
 # https://stackoverflow.com/questions/54118095/
 
@@ -92,10 +92,9 @@ class AbstractRepository(Generic[Entity, Identifier]):
 
 
 class MemoryRepository(AbstractRepository[Entity, Identifier]):
-    storage = {}
-
     def __init__(self, *entities) -> None:
-        MemoryRepository.storage |= {e.identifier: e for e in entities}
+        self.storage = {}  # Should be class variable?
+        self.storage |= {e.identifier: e for e in entities}
         self._current = []
 
     def save(self, entity) -> None:
@@ -103,17 +102,19 @@ class MemoryRepository(AbstractRepository[Entity, Identifier]):
             raise ValueError("Conflict {entity}")
         self._current.append(entity)
 
-    def find(self, entity_id: Identifier) -> Entity | None:  # Entity[Identifier]
-        return self._storage.get(entity_id, None)
+    def find(
+        self, entity_id: Identifier
+    ) -> Entity | None:  # Entity[Identifier] can!t be used?
+        return self.storage.get(entity_id, None)
 
     def count(self) -> int:
-        return len(self._storage.keys())
+        return len(self.storage.keys())
 
     def exists(self, entity_id) -> bool:
-        return entity_id in self._storage
+        return entity_id in self.storage
 
     def _commit(self) -> None:
-        self._storage |= {e.identifier: e for e in self._current}
+        self.storage |= {e.identifier: e for e in self._current}
         self._current = []
 
     def _revert(self) -> None:
