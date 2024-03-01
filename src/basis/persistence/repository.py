@@ -123,4 +123,5 @@ class MemoryRepository(AbstractRepository[Entity, Identifier]):
 
 if __name__ == "__main__":
     import doctest
+
     doctest.testmod()
