@@ -2,14 +2,24 @@
 Modul obsahuje třídy abstrahující ukládání a načítání entit do/z úložiště (návrhový vzor repository).
 """
 
-from abc import abstractmethod
+from abc import abstractmethod, abstractclassmethod
 from typing import Generic, TypeVar, Any, Self
+
+from basis.persistence.interface import Connection
 
 
 Entity = TypeVar("Entity", bound=Any)
+"""A domain entity type."""
 Identifier = TypeVar("Identifier", bound=Any)
+"""A domain entity identifier type."""
 
 # https://stackoverflow.com/questions/54118095/
+
+
+class PersistenceError(Exception):
+    def __init__(self, message, *errors):
+        super().__init__(self, message)
+        self.errors = errors
 
 
 # class AbstractReadableRepository: ...
@@ -17,7 +27,7 @@ Identifier = TypeVar("Identifier", bound=Any)
 
 
 class AbstractRepository(Generic[Entity, Identifier]):
-    def __init__(self, context: Any = None) -> None:
+    def __init__(self, context: Connection = None) -> None:
         self.context = context
 
     @abstractmethod
@@ -26,11 +36,18 @@ class AbstractRepository(Generic[Entity, Identifier]):
         Save the entity to the storage.
         """
 
+    # def save_all(self, entities) -> None: ...
+
     @abstractmethod
     def find(self, entity_id: Identifier) -> Entity:  # Entity[Identifier]
         """
         Find the entity in the storage.
         """
+
+    # def find_all(self, predicate) -> Iterable[T]: ...
+
+    # @abstractclassmethod
+    # def next_id() -> Id: ...
 
     @abstractmethod
     def count(self) -> int:
@@ -66,7 +83,7 @@ class AbstractRepository(Generic[Entity, Identifier]):
 
     def __enter__(self) -> Self:
         return self
-        
+
     def __exit__(self, error_type, error_value, traceback) -> None:
         if error_type:
             self._revert()
@@ -75,9 +92,8 @@ class AbstractRepository(Generic[Entity, Identifier]):
 
 
 class MemoryRepository(AbstractRepository[Entity, Identifier]):
-
     storage = {}
-    
+
     def __init__(self, *entities) -> None:
         MemoryRepository.storage |= {e.identifier: e for e in entities}
         self._current = []

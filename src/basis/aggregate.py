@@ -6,7 +6,7 @@ The abstract classes to implements a _Repository pattern_.
 """
 
 
-from typing import TypeVar, Generic
+from typing import TypeVar, Generic, Protocol
 
 
 __all__ = tuple(["Id", "Entity"])
@@ -17,6 +17,12 @@ Id = TypeVar("Id")
 
 
 # Id = TypeVar("Id", Hashable) # MUST be immutable e.g. UUID, int etc.
+
+
+class Identifiable(Protocol, Generic[Id]):
+    @property
+    def identifier(self) -> Id:
+        """The entitiy unique identifier."""
 
 
 class Entity(Generic[Id]):

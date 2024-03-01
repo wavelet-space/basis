@@ -2,7 +2,7 @@
 Modul obsahuje protokoly, rozhraní pomocné funkce používané napříč knihovnou.
 """
 
-from typing import Protocol, TypeVar, Generic
+from typing import Protocol
 
 
 def is_singleton(this: object) -> bool:
@@ -10,9 +10,7 @@ def is_singleton(this: object) -> bool:
 
 
 class Singleton:
-    """
-    Marker interface to subclass.
-    """
+    """Marker interface to subclass."""
 
 
 class Versionable(Protocol):
@@ -25,13 +23,3 @@ class Configurable(Protocol):
     @property
     def configuration(self):  # -> ?
         ...
-
-
-Identifier = TypeVar("Identifier")
-"""The identifier that is unique per aggregates."""
-
-
-class Identifiable(Protocol, Generic[Identifier]):
-    @property
-    def identifier(self) -> Identifier:
-        """The entitiy unique identifier."""
