@@ -5,8 +5,8 @@ Modul obsahuje třídy abstrahující ukládání a načítání entit do/z úlo
 from abc import abstractmethod
 from typing import Generic, TypeVar, Self
 
-from basis.persistence.interface import Connection
-from basis.aggregate import Identifier, Entity
+from ._connection import Connection
+from ..aggregate import Identifier, Entity
 
 
 Entity = TypeVar("Entity", bound=Entity)

@@ -1,4 +1,4 @@
-from basis.persistence.repository import MemoryRepository
+from basis.persistence import MemoryRepository
 
 
 class FakeEntity:

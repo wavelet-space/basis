@@ -10,7 +10,9 @@ def transactional():
 
 class Transaction(ABC):
     """
-    The transaction represents a group of actions that should be executed as a unit. When something goes wrong, everything should be reverted to its original state. Use this class to implement the Unit of Work pattern.
+    The transaction represents a group of actions that should be executed as a unit.
+    When something goes wrong, everything should be reverted to its original state.
+    Use this class to implement the Unit of Work pattern.
     """
 
     @abstractmethod
