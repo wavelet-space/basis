@@ -1,5 +1,7 @@
 # basis
 
+[![Documentation](https://github.com/wavelet-space/basis/actions/workflows/docs.yml/badge.svg)](https://github.com/wavelet-space/basis/actions/workflows/docs.yml)
+
 **Useful things shared across Python based projects.**
 
 This serves as a focal point for other packages. Apparently some modules could exist as stand-alone packages, but for simplicity, we distribute them as a unified package. The reason is that this package, or modules, is constantly being added and modified, and managing one package is much easier than several packages at once. Our goal is to contain classes and functions for both normal programming and more specialized code, e.g., for optimization and numerical programming. It fulfills a similar role as, e.g., <https://github.com/facebook/folly> or <https://github.com/bloomberg/bde>, but for Python instead of C++. 
