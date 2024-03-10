@@ -21,7 +21,7 @@ class Versionable[Version](Protocol):
     """
     
     @property
-    def version(self) -> :
+    def version(self) -> Version:
         ...
 
 
