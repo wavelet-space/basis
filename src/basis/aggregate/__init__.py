@@ -9,36 +9,34 @@ import inspect
 from typing import TypeVar, Protocol
 
 
-__all__ = tuple(["Identifier", "Entity"])
-
-
-"""A domain entity identifier type."""
-Identifier = TypeVar("Identifier")
-# Hashable + immutable e.g. UUID, int etc.
+__all__ = tuple(["Entity"])
 
 
 class Identifiable[Identifier](Protocol):
     @property
     def identifier(self) -> Identifier:
-        """The entitiy unique identifier."""
+        """The unique identifier for a group of objects of the same type."""
+
+# Hashable + immutable e.g. UUID, int etc.
 
 
 class Entity[Identifier]:
     """
-    An entity object in the terms of Doman-driven design.
+    An entity object in the terms of domain-driven design.
 
-    :param identifier:
+    :tparam: A domain entity identifier type.
+    :param identifier: The entity's identifier unique accros aggregate.
     """
 
-    def __init__(self, identifier: Identifier):
+    def __init__(self, identifier: Identifier) -> None:
         self._identifier: Identifier = identifier
 
     @property
     def identifier(self) -> Identifier:
         return self._identifier
 
-    def __eq__(self, other: object) -> bool:
-        return isinstance(other, type(self)) and self.identifier == other.identifier
+    def __eq__(self, that: object) -> bool:
+        return isinstance(that, type(self)) and self.identifier == that.identifier
 
     def __hash__(self) -> int:
         return hash((type(self), self.identifier))
@@ -54,6 +52,13 @@ class Entity[Identifier]:
 
     __repr__ = __str__  # Maybe prefer not to override this.
 
-    # NOTE The transfer layer (data transfer object) related method.
-    # Maybe use a standalone :class:`JsonEncoder` in DTO module.
-    # def to_json(self): return NotImplemented
+
+class VersionedEntity[Identifier, Version](Entity[Identifier]):
+    
+    def __init__(self, identifier: Identifier, version: Version) -> None:
+        super().__init__(identifier=identifier)
+        self._version = version
+
+    @property
+    def version(self) -> Version:
+        return self._version
