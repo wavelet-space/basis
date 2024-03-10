@@ -1,5 +1,5 @@
-from typing import ParamSpec, TypeVar
 from collections.abc import Awaitable, Callable
+from typing import ParamSpec, TypeVar
 
 P = ParamSpec("P")
 R = TypeVar("R")

@@ -3,11 +3,10 @@ Modul obsahuje třídy abstrahující ukládání a načítání entit do/z úlo
 """
 
 from abc import abstractmethod
-from typing import Generic, TypeVar, Self
+from typing import Self, TypeVar
 
+from ..aggregate import Entity
 from ._connection import Connection
-from ..aggregate import Identifier, Entity
-
 
 Entity = TypeVar("Entity", bound=Entity)
 """A domain entity type."""
@@ -26,7 +25,7 @@ class PersistenceError(Exception):
 # class AbstractWrietableRepository: ...
 
 
-class AbstractRepository(Generic[Entity, Identifier]):
+class AbstractRepository[Entity, Identifier]:
     def __init__(self, context: Connection = None) -> None:
         self.context = context
 
@@ -91,7 +90,7 @@ class AbstractRepository(Generic[Entity, Identifier]):
             self._commit()
 
 
-class MemoryRepository(AbstractRepository[Entity, Identifier]):
+class MemoryRepository[Entity, Identifier](AbstractRepository):
     def __init__(self, *entities) -> None:
         self.storage = {}  # Should be class variable?
         self.storage |= {e.identifier: e for e in entities}

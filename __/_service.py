@@ -7,7 +7,6 @@ FIXME
 
 from uuid import UUID
 
-
 __all__ = tuple(("Service"))
 
 

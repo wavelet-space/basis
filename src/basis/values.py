@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 
-
 __all__ = ["SingleCaseValue"]
 
 
@@ -8,9 +7,9 @@ __all__ = ["SingleCaseValue"]
 class SingleCaseValue[T]:
     """
     Represents a data class with a single value.
-    
+
     This is a convention, so you don't have to think about how to name a value attribute.
-    
+
     Example:
 
     .. code-block:: python
@@ -22,4 +21,5 @@ class SingleCaseValue[T]:
                     raise ValueError("empty name is not allowed")
 
     """
+
     value: T

@@ -6,8 +6,7 @@ The abstract classes to implements a _Repository pattern_.
 """
 
 import inspect
-from typing import TypeVar, Protocol
-
+from typing import Protocol
 
 __all__ = tuple(["Entity"])
 
@@ -16,6 +15,7 @@ class Identifiable[Identifier](Protocol):
     @property
     def identifier(self) -> Identifier:
         """The unique identifier for a group of objects of the same type."""
+
 
 # Hashable + immutable e.g. UUID, int etc.
 
@@ -54,7 +54,6 @@ class Entity[Identifier]:
 
 
 class VersionedEntity[Identifier, Version](Entity[Identifier]):
-    
     def __init__(self, identifier: Identifier, version: Version) -> None:
         super().__init__(identifier=identifier)
         self._version = version

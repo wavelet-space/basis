@@ -4,7 +4,7 @@
 This module contains helpers for implementing factories for an aggregates.
 """
 
-from typing import Callable, TypeVar, Any
+from typing import Any, Callable, TypeVar
 
 __all__ = tuple(())
 

@@ -2,11 +2,11 @@
 Wavelet WSGI application framework.
 """
 
-from typing import Callable
-from enum import IntEnum
-from argparse import ArgumentParser
 import sys
+from argparse import ArgumentParser
 from dataclasses import dataclass
+from enum import IntEnum
+from typing import Callable
 
 """
 This module contains HTTP status codes.

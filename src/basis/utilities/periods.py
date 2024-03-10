@@ -7,9 +7,9 @@ e.g. Get
 
 """
 
-from typing import Iterator
 from datetime import datetime, timedelta
 from enum import StrEnum, auto, unique
+from typing import Iterator
 
 
 @unique

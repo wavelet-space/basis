@@ -3,9 +3,8 @@ Modul obsahuje monádu :py:class:`Result` s podtypy :class:`Success` a :class:`F
 správnou respektive chybnou hodnotu. 
 """
 
-from typing import Generic, TypeVar, Self, Any, final
 from dataclasses import dataclass
-
+from typing import Any, Generic, Self, TypeVar, final
 
 Value = TypeVar("Value", Any, None)
 Error = TypeVar("Error", Exception, None)

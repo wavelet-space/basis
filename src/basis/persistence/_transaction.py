@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
-from typing import Self
 from pathlib import Path
+from typing import Self
 
 
 def transactional():

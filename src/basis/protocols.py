@@ -15,11 +15,11 @@ class Singleton:
 
 class Versionable[Version](Protocol):
     """
-    Represents an object with defined version. 
-    
+    Represents an object with defined version.
+
     Version e.g. ``str``, ``int``, or ``tuple[int, int, int]``.
     """
-    
+
     @property
     def version(self) -> Version:
         ...

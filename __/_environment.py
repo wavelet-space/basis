@@ -7,7 +7,6 @@ FIXME
 
 from essence.core._protocols import Singleton
 
-
 __all__ = tuple(("Environment"))
 
 
