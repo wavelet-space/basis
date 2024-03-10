@@ -1,6 +1,7 @@
 # basis
 
-[![Documentation](https://github.com/wavelet-space/basis/actions/workflows/docs.yml/badge.svg)](https://github.com/wavelet-space/basis/actions/workflows/docs.yml)
+[![main](https://github.com/wavelet-space/basis/actions/workflows/main.yml/badge.svg)](https://github.com/wavelet-space/basis/actions/workflows/main.yml)
+[![docs](https://github.com/wavelet-space/basis/actions/workflows/docs.yml/badge.svg)](https://github.com/wavelet-space/basis/actions/workflows/docs.yml)
 
 **Useful things shared across Python based projects.**
 
