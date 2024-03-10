@@ -1,4 +1,4 @@
-name: Documentation
+name: docs
 
 # Execute this workflow automatically when we push to main branch.
 on:
