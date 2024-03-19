@@ -1,0 +1,140 @@
+:py:mod:`basis.persistence._repository`
+=======================================
+
+.. py:module:: basis.persistence._repository
+
+.. autoapi-nested-parse::
+
+   Modul obsahuje třídy abstrahující ukládání a načítání entit do/z úložiště (návrhový vzor repository).
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   basis.persistence._repository.AbstractRepository
+   basis.persistence._repository.MemoryRepository
+
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   basis.persistence._repository.Entity
+
+
+.. py:data:: Entity
+
+   A domain entity type.
+
+
+.. py:exception:: PersistenceError(message, *errors)
+
+
+   Bases: :py:obj:`Exception`
+
+   Common base class for all non-exit exceptions.
+
+
+.. py:class:: AbstractRepository(context: basis.persistence._connection.Connection = None)
+
+
+   .. py:method:: save(entity) -> None
+      :abstractmethod:
+
+      Save the entity to the storage.
+
+
+   .. py:method:: find(entity_id: Identifier) -> Entity
+      :abstractmethod:
+
+      Find the entity in the storage.
+
+
+   .. py:method:: count() -> int
+      :abstractmethod:
+
+      Count the persisted entities.
+
+
+   .. py:method:: exists(entity_id) -> bool
+      :abstractmethod:
+
+      Check if the entity is alrady persisted.
+
+      :param: ...
+
+
+   .. py:method:: _commit() -> None
+      :abstractmethod:
+
+      Commit changes.
+
+      :raises: ...
+
+
+   .. py:method:: _revert() -> None
+      :abstractmethod:
+
+      Revert (abort) changes.
+
+      :raises: ...
+
+
+   .. py:method:: __enter__() -> Self
+
+
+   .. py:method:: __exit__(error_type, error_value, traceback) -> None
+
+
+
+.. py:class:: MemoryRepository(*entities)
+
+
+   Bases: :py:obj:`AbstractRepository`
+
+   .. py:method:: save(entity) -> None
+
+      Save the entity to the storage.
+
+
+   .. py:method:: find(entity_id: Identifier) -> Entity | None
+
+      Find the entity in the storage.
+
+
+   .. py:method:: count() -> int
+
+      Count the persisted entities.
+
+
+   .. py:method:: exists(entity_id) -> bool
+
+      Check if the entity is alrady persisted.
+
+      :param: ...
+
+
+   .. py:method:: _commit() -> None
+
+      Commit changes.
+
+      :raises: ...
+
+
+   .. py:method:: _revert() -> None
+
+      Revert (abort) changes.
+
+      :raises: ...
+
+
+

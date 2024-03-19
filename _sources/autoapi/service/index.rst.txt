@@ -1,0 +1,38 @@
+:py:mod:`service`
+=================
+
+.. py:module:: service
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   service.Service
+
+
+
+
+.. py:class:: Service(id: uuid.UUID, name: str, version: str, summary: str)
+
+
+   Bases: :py:obj:`basis.messaging.actor.Actor`
+
+   .. py:property:: summary
+      :type: str
+
+      Returns the summary about service.
+
+
+   .. py:method:: __call__(*args, **kwargs)
+      :abstractmethod:
+      :async:
+
+      The asynchronous method.
+
+
+

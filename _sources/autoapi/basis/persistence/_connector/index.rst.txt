@@ -1,0 +1,23 @@
+:py:mod:`basis.persistence._connector`
+======================================
+
+.. py:module:: basis.persistence._connector
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   basis.persistence._connector.Connector
+
+
+
+
+.. py:class:: Connector
+
+
+

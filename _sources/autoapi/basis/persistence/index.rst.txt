@@ -1,0 +1,190 @@
+:py:mod:`basis.persistence`
+===========================
+
+.. py:module:: basis.persistence
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   _connection/index.rst
+   _connector/index.rst
+   _cursor/index.rst
+   _repository/index.rst
+   _transaction/index.rst
+
+
+Package Contents
+----------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   basis.persistence.Connection
+   basis.persistence.Cursor
+   basis.persistence.CursorExtended
+   basis.persistence.AbstractRepository
+   basis.persistence.MemoryRepository
+
+
+
+
+.. py:class:: Connection
+
+
+   Bases: :py:obj:`Protocol`
+
+   A database connection object as defined in PEP 249 <https://peps.python.org/pep-0249/>_.
+
+   .. seealso::
+
+       The `connection object <https://peps.python.org/pep-0249/#connection-objects>`_
+
+
+   .. py:attribute:: autocommit
+      :type: bool
+
+      
+
+   .. py:method:: close() -> None
+
+
+   .. py:method:: commit() -> None
+
+
+   .. py:method:: rollback() -> None
+
+
+   .. py:method:: cursor() -> basis.persistence._cursor.Cursor
+
+
+
+.. py:class:: Cursor
+
+
+   Bases: :py:obj:`Protocol`
+
+   A connection cursor object protocol as defined in PEP 249 <https://peps.python.org/pep-0249/>_.
+
+   .. py:property:: description
+      :type: Any
+
+
+   .. py:property:: rowcount
+      :type: int
+
+
+   .. py:method:: execute() -> None
+
+
+   .. py:method:: executemany() -> None
+
+
+
+.. py:class:: CursorExtended
+
+
+   Bases: :py:obj:`Cursor`
+
+   A connection cursor object protocol with optional features.
+
+
+.. py:class:: AbstractRepository(context: basis.persistence._connection.Connection = None)
+
+
+   .. py:method:: save(entity) -> None
+      :abstractmethod:
+
+      Save the entity to the storage.
+
+
+   .. py:method:: find(entity_id: Identifier) -> Entity
+      :abstractmethod:
+
+      Find the entity in the storage.
+
+
+   .. py:method:: count() -> int
+      :abstractmethod:
+
+      Count the persisted entities.
+
+
+   .. py:method:: exists(entity_id) -> bool
+      :abstractmethod:
+
+      Check if the entity is alrady persisted.
+
+      :param: ...
+
+
+   .. py:method:: _commit() -> None
+      :abstractmethod:
+
+      Commit changes.
+
+      :raises: ...
+
+
+   .. py:method:: _revert() -> None
+      :abstractmethod:
+
+      Revert (abort) changes.
+
+      :raises: ...
+
+
+   .. py:method:: __enter__() -> Self
+
+
+   .. py:method:: __exit__(error_type, error_value, traceback) -> None
+
+
+
+.. py:class:: MemoryRepository(*entities)
+
+
+   Bases: :py:obj:`AbstractRepository`
+
+   .. py:method:: save(entity) -> None
+
+      Save the entity to the storage.
+
+
+   .. py:method:: find(entity_id: Identifier) -> Entity | None
+
+      Find the entity in the storage.
+
+
+   .. py:method:: count() -> int
+
+      Count the persisted entities.
+
+
+   .. py:method:: exists(entity_id) -> bool
+
+      Check if the entity is alrady persisted.
+
+      :param: ...
+
+
+   .. py:method:: _commit() -> None
+
+      Commit changes.
+
+      :raises: ...
+
+
+   .. py:method:: _revert() -> None
+
+      Revert (abort) changes.
+
+      :raises: ...
+
+
+

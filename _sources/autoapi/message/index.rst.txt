@@ -1,0 +1,45 @@
+:py:mod:`message`
+=================
+
+.. py:module:: message
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   message.Message
+   message.Event
+
+
+
+
+.. py:class:: Message
+
+
+   .. py:attribute:: type
+      :type: str
+
+      
+
+   .. py:attribute:: name
+      :type: str
+
+      
+
+   .. py:attribute:: data
+      :type: Any
+
+      
+
+
+.. py:class:: Event
+
+
+   Bases: :py:obj:`Message`
+
+

@@ -1,0 +1,18 @@
+:py:mod:`basis.utilities`
+=========================
+
+.. py:module:: basis.utilities
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   datetime/index.rst
+   numbers/index.rst
+   periods/index.rst
+   tuples/index.rst
+
+
