@@ -11,13 +11,13 @@ class FakeEntity:
 
 def test_memory_repository_finds_nothing():
     with MemoryRepository() as store:
-        found = store.find(entity_id=1)
+        found = store.get(entity_id=1)
         assert found is None
 
 
 def test_memory_repository_finds_something():
     with MemoryRepository(FakeEntity(1)) as store:
-        found = store.find(entity_id=1)
+        found = store.get(entity_id=1)
         assert found.identifier == 1
 
 

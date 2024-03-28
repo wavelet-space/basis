@@ -26,5 +26,5 @@ from company.domain.model import PersonID
 
 store = Memoryrepository()
 person_id: PersonID = 1
-model = store.find(person_id)
+model = store.get(person_id)
 ```

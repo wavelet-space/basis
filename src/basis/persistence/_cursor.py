@@ -7,20 +7,21 @@ class Cursor(Protocol):
     """
 
     @property
-    def description(self) -> Any:  # TODO
+    def description(self) -> tuple:  # TODO
         ...
 
     @property
     def rowcount(self) -> int:
         ...
 
-    def execute() -> None:
+    def execute(self, query) -> None:
         ...
 
-    def executemany() -> None:
-        ...
+    #def executemany() -> None:
+        #...
 
-    # def fetchone() -> None: ...
+    def fetchone(self) -> tuple:
+        ...
 
     # def fetchall() -> None: ...
 
@@ -43,3 +44,26 @@ class CursorExtended(Cursor):
     """
 
     ...
+
+class SQLCursor(Cursor):
+    def __init__(self, cursor: Any) -> None:
+        """Takes cursor of any relational database, which implements PEP 249"""
+        self._cursor = cursor
+
+    @property
+    def description(self) -> tuple:
+        """TODO: find if this can even be generalized"""
+        return self._cursor.description
+
+    @property
+    def rowcount(self) -> int:
+        return self._cursor.rowcount
+
+    def close(self) -> None:
+        self._cursor.close()
+
+    def execute(self, query) -> None:
+        self._cursor.execute(query)
+
+    def fetchone(self) -> tuple:
+        return self._cursor.fetchone()
