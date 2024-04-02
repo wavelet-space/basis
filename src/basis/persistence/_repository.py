@@ -5,12 +5,11 @@ Modul obsahuje třídy abstrahující ukládání a načítání entit do/z úlo
 from abc import abstractmethod
 from typing import Self, TypeVar, Protocol
 
+
 #from ..aggregate import Entity
 from ._connection import Connection, SQLConnection
-from ._entity import Entity
+from ._entity import Entity, DictEntity, Identifier
 
-Entity = TypeVar("Entity", bound=Entity)
-"""A domain entity type."""
 
 
 # https://stackoverflow.com/questions/54118095/
@@ -124,20 +123,23 @@ IDENTITY_NAME = 'id'
 TABLE_NAME = 'test'
 
 
-class SQLRepository[DictEntity, Identifier](AbstractRepository):
+class SQLRepository(AbstractRepository):
 
     """Interesting problems:
                             * User of repository MUST already know the mapping
+                            * id column name MUST also be known ahead of the time
+                            * does it make even sense to have generic identifier, when ids are numbers?
+                            * but they don't have to be number, or a single column, even though it is a liiiitle bit idiotic
     """
-    def __init__(self, connection: SQLConnection, mapping=None) -> None:
+    def __init__(self, context: SQLConnection, mapping=None) -> None:
         """Initialize the SQLRepository class.
             Args:
-                connection (SQLConnection): Connection to the database
+                context (SQLConnection): Connection to the database
                 mapping (dict): Mapping between keys in used entity and columns in table
         """
 
-        self._connection = connection
-        self._cursor = connection.cursor()
+        super().__init__(context)
+        self._cursor = context.cursor()
         self._from_key_to_column = mapping or {}
         self._from_column_to_key = zip(self._from_key_to_column.values(), self._from_key_to_column.keys())
 
@@ -168,7 +170,8 @@ class SQLRepository[DictEntity, Identifier](AbstractRepository):
                 key = self._from_column_to_key[column]
             result[key] = value
 
-        return self.storage.get(entity_id, None)
+        entity = DictEntity[int](entity_id, result)
+        return entity
 
     def count(self) -> int:
         return self._cursor.rowcount
@@ -179,10 +182,10 @@ class SQLRepository[DictEntity, Identifier](AbstractRepository):
         return self._cursor.fetchone() is not None
 
     def _commit(self) -> None:
-        self._connection.commit()
+        self.context.commit()
 
     def _revert(self) -> None:
-        self._connection.rollback()
+        self.context.rollback()
 
 
 if __name__ == "__main__":
