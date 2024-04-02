@@ -3,13 +3,11 @@ Modul obsahuje třídy abstrahující ukládání a načítání entit do/z úlo
 """
 
 from abc import abstractmethod
-from typing import Self, TypeVar, Protocol
+from typing import TypeVar, Protocol, Generic
 
-
-#from ..aggregate import Entity
+# from ..aggregate import Entity
 from ._connection import Connection, SQLConnection
-from ._entity import Entity, DictEntity, Identifier
-
+from ._entity import Entity, DictEntity, Identifier, EntityType
 
 
 # https://stackoverflow.com/questions/54118095/
@@ -25,12 +23,12 @@ class PersistenceError(Exception):
 # class AbstractWrietableRepository: ...
 
 
-class AbstractRepository(Protocol[Entity, Identifier]):
+class AbstractRepository(Protocol, Generic[EntityType, Identifier]):
     def __init__(self, context: Connection = None) -> None:
         self.context = context
 
     @abstractmethod
-    def save(self, entity: Entity[Identifier]) -> None:
+    def save(self, entity: EntityType) -> None:
         """
         Save the entity to the storage.
         """
@@ -38,7 +36,7 @@ class AbstractRepository(Protocol[Entity, Identifier]):
     # def save_all(self, entities) -> None: ...
 
     @abstractmethod
-    def get(self, entity_id: Identifier) -> Entity[Identifier]:  # Entity[Identifier]
+    def get(self, entity_id: Identifier) -> EntityType:  # Entity[Identifier]
         """
         Find the entity in the storage.
         """
@@ -69,6 +67,7 @@ class AbstractRepository(Protocol[Entity, Identifier]):
 
         :raises: ...
         """
+        self.context.commit()
 
     @abstractmethod
     def _revert(self) -> None:
@@ -78,9 +77,9 @@ class AbstractRepository(Protocol[Entity, Identifier]):
         :raises: ...
         """
         # revert/rollback
-        ...
+        self.context.rollback()
 
-    def __enter__(self) -> Self:
+    def __enter__(self):  # -> Self supported only from 3.10
         return self
 
     def __exit__(self, error_type, error_value, traceback) -> None:
@@ -90,20 +89,20 @@ class AbstractRepository(Protocol[Entity, Identifier]):
             self._commit()
 
 
-class MemoryRepository(AbstractRepository[DictEntity, Identifier]):
+class MemoryRepository(AbstractRepository, Generic[EntityType, Identifier]):
     def __init__(self, *entities) -> None:
         self.storage = {}  # Should be class variable?
         self.storage |= {e.identifier: e.data for e in entities}
         self._current = []
 
-    def save(self, entity: DictEntity[Identifier]) -> None:
+    def save(self, entity: DictEntity) -> None:
         if self.exists(entity.identifier):
             raise ValueError("Conflict {entity}")
         self._current.append(entity)
 
     def get(
-        self, entity_id: Identifier
-    ) -> DictEntity[Identifier] | None:  # Entity[Identifier] can!t be used?
+            self, entity_id: Identifier
+    ) -> DictEntity | None:  # Entity[Identifier] can!t be used?
         return self.storage.get(entity_id, None)
 
     def count(self) -> int:
@@ -119,18 +118,19 @@ class MemoryRepository(AbstractRepository[DictEntity, Identifier]):
     def _revert(self) -> None:
         self._current = []
 
+
 IDENTITY_NAME = 'id'
 TABLE_NAME = 'test'
 
 
 class SQLRepository(AbstractRepository[DictEntity, Identifier]):
-
     """Interesting problems:
                             * User of repository MUST already know the mapping
                             * id column name MUST also be known ahead of the time
                             * does it make even sense to have generic identifier, when ids are numbers?
                             * but they don't have to be number, or a single column, even though it is a liiiitle bit idiotic
     """
+
     def __init__(self, context: SQLConnection, mapping=None) -> None:
         """Initialize the SQLRepository class.
             Args:
@@ -140,21 +140,25 @@ class SQLRepository(AbstractRepository[DictEntity, Identifier]):
 
         super().__init__(context)
         self._cursor = context.cursor()
-        self._from_key_to_column = mapping or {}
-        self._from_column_to_key = zip(self._from_key_to_column.values(), self._from_key_to_column.keys())
+        self._from_key_to_column = mapping or dict()
+        print(self._from_key_to_column)
+        self._from_column_to_key = {key: value for key, value in zip(self._from_key_to_column.values(), self._from_key_to_column.keys())}
 
-
-    def save(self, entity: DictEntity[Identifier]) -> None:
+    def save(self, entity: DictEntity) -> None:
         if self.exists(entity.identifier):
-            raise ValueError("Conflict {entity}")
+            raise ValueError(f"Conflict {entity}")
 
         # this is extremely suspicious part of code
-        query = f'INSERT INTO {TABLE_NAME} {tuple(entity.data.keys())} VALUES {tuple(entity.data.values())}'
+        # this does not unsuprisingly work, he types are not converted well this way into sql instruction value
+        value_names = ', '.join([str(x) for x in entity.data.keys()])
+        values = ', '.join([str(x) for x in entity.data.values()])
+        # TODO: USE MORE UNIVERSAL WAY TO SEND VALUE DATA
+        query = f'INSERT INTO {TABLE_NAME} ({value_names}) VALUES ({values})'
         self._cursor.execute(query)
 
     def get(
-        self, entity_id: Identifier
-    ) -> DictEntity[Identifier] | None:  # Entity[Identifier] can!t be used? maybe can?
+            self, entity_id: Identifier
+    ) -> DictEntity | None:  # Entity[Identifier] can!t be used? maybe can?
 
         query = f'SELECT * FROM {TABLE_NAME} WHERE {IDENTITY_NAME}={entity_id}'
         self._cursor.execute(query)
@@ -182,14 +186,13 @@ class SQLRepository(AbstractRepository[DictEntity, Identifier]):
         return self._cursor.fetchone() is not None
 
     def _commit(self) -> None:
-        self.context.commit()
+        return super()._commit()
 
     def _revert(self) -> None:
-        self.context.rollback()
+        return super()._revert()
 
 
 if __name__ == "__main__":
     import doctest
 
     doctest.testmod()
-

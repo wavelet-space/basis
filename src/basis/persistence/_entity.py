@@ -1,7 +1,7 @@
 import inspect
 import typing
 from abc import ABC
-from typing import TypeVar, Hashable, Generic
+from typing import TypeVar, Hashable, Generic, Protocol
 
 Identifier = TypeVar("Identifier", bound=Hashable)
 """The identifier is unique per aggregate. Must be immutable and hashable, e.g., 'int', 'UUID', tuple, etc.
@@ -25,18 +25,13 @@ class Entity(ABC, Generic[Identifier]):
     :param identifier:
     """
 
-    def __init__(self, identifier: Identifier, data):
+    def __init__(self, identifier: Identifier):
         self._identifier: Identifier = identifier
-        # cannot set needed properties for datatypes now, will usually be dict, but file handling can be a problem
-        self._data: typing.Any = data
+
 
     @property
     def identifier(self) -> Identifier:
         return self._identifier
-
-    @property
-    def data(self) -> typing.Any:
-        return self._data
 
     def __eq__(self, other: object) -> bool:
         return isinstance(other, type(self)) and self.identifier == other.identifier
@@ -63,6 +58,11 @@ class Entity(ABC, Generic[Identifier]):
 EntityType = TypeVar("EntityType", bound=Entity)
 
 
-class DictEntity(Entity):
+class DictEntity(Entity[Identifier]):
     def __init__(self, identifier: Identifier, data: dict):
-        super().__init__(identifier, data)
+        super().__init__(identifier)
+        self._data = data
+
+    @property
+    def data(self) -> typing.Any:
+        return self._data
