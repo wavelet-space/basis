@@ -25,12 +25,12 @@ class PersistenceError(Exception):
 # class AbstractWrietableRepository: ...
 
 
-class AbstractRepository[Entity, Identifier](Protocol):
+class AbstractRepository(Protocol[Entity, Identifier]):
     def __init__(self, context: Connection = None) -> None:
         self.context = context
 
     @abstractmethod
-    def save(self, entity) -> None:
+    def save(self, entity: Entity[Identifier]) -> None:
         """
         Save the entity to the storage.
         """
@@ -38,7 +38,7 @@ class AbstractRepository[Entity, Identifier](Protocol):
     # def save_all(self, entities) -> None: ...
 
     @abstractmethod
-    def get(self, entity_id: Identifier) -> Entity:  # Entity[Identifier]
+    def get(self, entity_id: Identifier) -> Entity[Identifier]:  # Entity[Identifier]
         """
         Find the entity in the storage.
         """
@@ -55,7 +55,7 @@ class AbstractRepository[Entity, Identifier](Protocol):
         """
 
     @abstractmethod
-    def exists(self, entity_id) -> bool:
+    def exists(self, entity_id: Identifier) -> bool:
         """
         Check if the entity is alrady persisted.
 
@@ -90,26 +90,26 @@ class AbstractRepository[Entity, Identifier](Protocol):
             self._commit()
 
 
-class MemoryRepository[DictEntity, Identifier](AbstractRepository):
+class MemoryRepository(AbstractRepository[DictEntity, Identifier]):
     def __init__(self, *entities) -> None:
         self.storage = {}  # Should be class variable?
         self.storage |= {e.identifier: e.data for e in entities}
         self._current = []
 
-    def save(self, entity) -> None:
+    def save(self, entity: DictEntity[Identifier]) -> None:
         if self.exists(entity.identifier):
             raise ValueError("Conflict {entity}")
         self._current.append(entity)
 
     def get(
         self, entity_id: Identifier
-    ) -> Entity | None:  # Entity[Identifier] can!t be used?
+    ) -> DictEntity[Identifier] | None:  # Entity[Identifier] can!t be used?
         return self.storage.get(entity_id, None)
 
     def count(self) -> int:
         return len(self.storage.keys())
 
-    def exists(self, entity_id) -> bool:
+    def exists(self, entity_id: Identifier) -> bool:
         return entity_id in self.storage
 
     def _commit(self) -> None:
@@ -123,7 +123,7 @@ IDENTITY_NAME = 'id'
 TABLE_NAME = 'test'
 
 
-class SQLRepository(AbstractRepository):
+class SQLRepository(AbstractRepository[DictEntity, Identifier]):
 
     """Interesting problems:
                             * User of repository MUST already know the mapping
@@ -144,7 +144,7 @@ class SQLRepository(AbstractRepository):
         self._from_column_to_key = zip(self._from_key_to_column.values(), self._from_key_to_column.keys())
 
 
-    def save(self, entity) -> None:
+    def save(self, entity: DictEntity[Identifier]) -> None:
         if self.exists(entity.identifier):
             raise ValueError("Conflict {entity}")
 
@@ -154,7 +154,7 @@ class SQLRepository(AbstractRepository):
 
     def get(
         self, entity_id: Identifier
-    ) -> Entity | None:  # Entity[Identifier] can!t be used?
+    ) -> DictEntity[Identifier] | None:  # Entity[Identifier] can!t be used? maybe can?
 
         query = f'SELECT * FROM {TABLE_NAME} WHERE {IDENTITY_NAME}={entity_id}'
         self._cursor.execute(query)
@@ -170,13 +170,13 @@ class SQLRepository(AbstractRepository):
                 key = self._from_column_to_key[column]
             result[key] = value
 
-        entity = DictEntity[int](entity_id, result)
+        entity = DictEntity[Identifier](entity_id, result)
         return entity
 
     def count(self) -> int:
         return self._cursor.rowcount
 
-    def exists(self, entity_id) -> bool:
+    def exists(self, entity_id: Identifier) -> bool:
         query = f'SELECT {IDENTITY_NAME} FROM {TABLE_NAME} WHERE {IDENTITY_NAME}={entity_id}'
         self._cursor.execute(query)
         return self._cursor.fetchone() is not None
