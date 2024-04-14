@@ -1,14 +1,13 @@
 import inspect
-import typing
 from abc import ABC
-from typing import TypeVar, Hashable, Generic, Protocol
+from typing import TypeVar, Hashable, Protocol, Final
 
 Identifier = TypeVar("Identifier", bound=Hashable)
 """The identifier is unique per aggregate. Must be immutable and hashable, e.g., 'int', 'UUID', tuple, etc.
 Remember that an identifier should match domain needs; it doesn't have to always be an integer or UUID."""
 
 
-class Identifiable(Protocol, Generic[Identifier]):  # type: ignore
+class Identifiable[Identifier](Protocol):  # type: ignore
     """
     Represents an entity with identifier.
     """
@@ -18,16 +17,16 @@ class Identifiable(Protocol, Generic[Identifier]):  # type: ignore
         """The entitie's unique identifier."""
 
 
-class Entity(ABC, Generic[Identifier]):
+class Entity[Identifier](ABC):
     """
     As generic as possible entity object to be used in repository.
 
     :param identifier:
     """
+    _identifier: Final[Identifier]
 
     def __init__(self, identifier: Identifier):
-        self._identifier: Identifier = identifier
-
+        self._identifier = identifier
 
     @property
     def identifier(self) -> Identifier:
@@ -56,13 +55,3 @@ class Entity(ABC, Generic[Identifier]):
 
 
 EntityType = TypeVar("EntityType", bound=Entity)
-
-
-class DictEntity(Entity[Identifier]):
-    def __init__(self, identifier: Identifier, data: dict):
-        super().__init__(identifier)
-        self._data = data
-
-    @property
-    def data(self) -> typing.Any:
-        return self._data

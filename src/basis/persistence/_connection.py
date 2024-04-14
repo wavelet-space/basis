@@ -52,27 +52,3 @@ class AsyncConnector:
 
     async def cursor(self) -> Cursor:
         ...
-
-
-class SQLConnection(Connection):
-    """
-    A database connection object which uses object,
-    that already works according to the PEP 249
-    """
-    def __init__(self, library, *args, **kwargs):
-        # TODO: probably add some way to check if connection was successful?
-        # is this even a good idea? maybe just let the errors surface as normal?
-        # TODO: add way to use autocommit
-        self.connection = library.connect(*args, **kwargs)
-
-    def close(self) -> None:
-        self.connection.close()
-
-    def commit(self) -> None:
-        self.connection.commit()
-
-    def rollback(self) -> None:
-        self.connection.rollback()
-
-    def cursor(self) -> Cursor:
-        return SQLCursor(self.connection.cursor())

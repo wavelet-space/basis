@@ -15,13 +15,15 @@ class Transaction(ABC):
     Use this class to implement the Unit of Work pattern.
     """
 
-    @abstractmethod
     def __enter__(self) -> Self:
         return self
 
     @abstractmethod
-    def __exit__(self, *args) -> None:
-        self.commit()
+    def __exit__(self, exc_type, exc_value, exc_traceback) -> None:
+        if exc_type:
+            self.revert()
+        else:
+            self.commit()
 
     @abstractmethod
     def commit(self):
