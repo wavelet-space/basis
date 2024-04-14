@@ -23,7 +23,68 @@ class PersistenceError(Exception):
 # class AbstractWrietableRepository: ...
 
 
-class AbstractRepository(Protocol, Generic[EntityType, Identifier]):
+class RepositoryProtocol[EntityType, Identifier](Protocol):
+    @abstractmethod
+    def save(self, entity: EntityType) -> None:
+        """
+        Save the entity to the storage.
+        """
+
+    # def save_all(self, entities) -> None: ...
+
+    @abstractmethod
+    def get(self, entity_id: Identifier) -> EntityType:  # Entity[Identifier]
+        """
+        Find the entity in the storage.
+        """
+
+    # def find_all(self, predicate) -> Iterable[T]: ...
+
+    # @abstractclassmethod
+    # def next_id() -> Id: ...
+
+    @abstractmethod
+    def count(self) -> int:
+        """
+        Count the persisted entities.
+        """
+
+    @abstractmethod
+    def exists(self, entity_id: Identifier) -> bool:
+        """
+        Check if the entity is alrady persisted.
+
+        :param: ...
+        """
+
+    @abstractmethod
+    def _commit(self) -> None:
+        """
+        Commit changes.
+
+        :raises: ...
+        """
+
+    @abstractmethod
+    def _revert(self) -> None:
+        """
+        Revert (abort) changes.
+
+        :raises: ...
+        """
+        # revert/rollback
+
+    def __enter__(self):  # -> Self supported only from 3.10
+        return self
+
+    def __exit__(self, error_type, error_value, traceback) -> None:
+        if error_type:
+            self._revert()
+        else:
+            self._commit()
+
+
+class AbstractRepository[EntityType, Identifier](RepositoryProtocol):
     def __init__(self, context: Connection = None) -> None:
         self.context = context
 
@@ -89,7 +150,7 @@ class AbstractRepository(Protocol, Generic[EntityType, Identifier]):
             self._commit()
 
 
-class MemoryRepository(AbstractRepository, Generic[EntityType, Identifier]):
+class MemoryRepository[EntityType, Identifier](RepositoryProtocol):
     def __init__(self, *entities) -> None:
         self.storage = {}  # Should be class variable?
         self.storage |= {e.identifier: e.data for e in entities}
@@ -123,13 +184,14 @@ IDENTITY_NAME = 'id'
 TABLE_NAME = 'test'
 
 
-class SQLRepository(AbstractRepository[DictEntity, Identifier]):
+class SQLRepository[Identifier](RepositoryProtocol[DictEntity, Identifier]):
     """Interesting problems:
                             * User of repository MUST already know the mapping
                             * id column name MUST also be known ahead of the time
                             * does it make even sense to have generic identifier, when ids are numbers?
                             * but they don't have to be number, or a single column, even though it is a liiiitle bit idiotic
     """
+    context: SQLConnection
 
     def __init__(self, context: SQLConnection, mapping=None) -> None:
         """Initialize the SQLRepository class.
@@ -137,12 +199,13 @@ class SQLRepository(AbstractRepository[DictEntity, Identifier]):
                 context (SQLConnection): Connection to the database
                 mapping (dict): Mapping between keys in used entity and columns in table
         """
-
-        super().__init__(context)
-        self._cursor = context.cursor()
+        # does not actually initialize context for some reason, probably badly set up Inheritance
+        self.context = context
+        self._cursor = self.context.cursor()
         self._from_key_to_column = mapping or dict()
         print(self._from_key_to_column)
-        self._from_column_to_key = {key: value for key, value in zip(self._from_key_to_column.values(), self._from_key_to_column.keys())}
+        self._from_column_to_key = {key: value for key, value in
+                                    zip(self._from_key_to_column.values(), self._from_key_to_column.keys())}
 
     def save(self, entity: DictEntity) -> None:
         if self.exists(entity.identifier):
