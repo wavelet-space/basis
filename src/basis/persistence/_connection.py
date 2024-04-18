@@ -1,6 +1,6 @@
 from typing import Protocol
 
-from ._cursor import Cursor, SQLCursor
+from ._cursor import Cursor
 
 
 class Connection(Protocol):

@@ -8,7 +8,6 @@ from typing import Protocol
 # from ..aggregate import Entity
 from ._connection import Connection
 
-
 # https://stackoverflow.com/questions/54118095/
 
 

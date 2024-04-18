@@ -1,4 +1,4 @@
-from typing import Any, Protocol
+from typing import Protocol
 
 
 class Cursor(Protocol):
@@ -28,7 +28,7 @@ class Cursor(Protocol):
     def fetchmany(self, size: int) -> list[tuple]: ...
 
     @property
-    def arraysize(self) -> int:
+    def arraysize(self) -> int: ...
 
 
 
@@ -41,7 +41,6 @@ class Cursor(Protocol):
     # def setinputsize() -> None: ...
 
     # def setoutputsize() -> None: ...
-
 
 class CursorExtended(Cursor):
     """

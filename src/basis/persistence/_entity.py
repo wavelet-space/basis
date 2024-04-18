@@ -1,6 +1,6 @@
 import inspect
 from abc import ABC
-from typing import TypeVar, Hashable, Protocol, Final
+from typing import Final, Hashable, Protocol, TypeVar
 
 Identifier = TypeVar("Identifier", bound=Hashable)
 """The identifier is unique per aggregate. Must be immutable and hashable, e.g., 'int', 'UUID', tuple, etc.
