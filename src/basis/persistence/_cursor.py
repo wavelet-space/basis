@@ -1,4 +1,4 @@
-from typing import Any, Protocol
+from typing import Protocol
 
 
 class Cursor(Protocol):
@@ -7,24 +7,30 @@ class Cursor(Protocol):
     """
 
     @property
-    def description(self) -> Any:  # TODO
+    def description(self) -> tuple:  # TODO
         ...
 
     @property
     def rowcount(self) -> int:
         ...
 
-    def execute() -> None:
+    def execute(self, query) -> None:
         ...
 
-    def executemany() -> None:
+    #def executemany() -> None:
+        #...
+
+    def fetchone(self) -> tuple:
         ...
 
-    # def fetchone() -> None: ...
+    def fetchall(self) -> list[tuple]: ...
 
-    # def fetchall() -> None: ...
+    def fetchmany(self, size: int) -> list[tuple]: ...
 
-    # def fetchmany() -> None: ...
+    @property
+    def arraysize(self) -> int: ...
+
+
 
     # ##################################################################### #
 
@@ -35,7 +41,6 @@ class Cursor(Protocol):
     # def setinputsize() -> None: ...
 
     # def setoutputsize() -> None: ...
-
 
 class CursorExtended(Cursor):
     """

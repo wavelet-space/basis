@@ -33,7 +33,7 @@ def test_memory_repository_save_with_manual_commit():
     store = MemoryRepository()
     store.save(FakeEntity(1))
     store.save(FakeEntity(2))
-    store._commit()
+    store.commit()
     assert store.count() == 2
 
 
