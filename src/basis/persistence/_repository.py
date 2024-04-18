@@ -140,7 +140,7 @@ class MemoryRepository[Entity, Identifier](RepositoryProtocol):
 
     def __init__(self, *entities) -> None:
         self._storage = {}  # Should be class variable?
-        self._storage |= {e.identifier: e.data for e in entities}
+        self._storage |= {e.identifier: e for e in entities}
         self._current = []
 
     def save(self, entity: Entity) -> None:
@@ -154,7 +154,8 @@ class MemoryRepository[Entity, Identifier](RepositoryProtocol):
         return self._storage.get(entity_id, None)
 
     def count(self) -> int:
-        return len(self._storage.keys())
+        # NOTE: no update, so it can just sum commited and uncommited
+        return len(self._storage.keys()) + len(self._current)
 
     def exists(self, entity_id: Identifier) -> bool:
         return entity_id in self._storage
