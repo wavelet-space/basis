@@ -23,6 +23,7 @@ class Entity[Identifier](ABC):
 
     :param identifier:
     """
+
     _identifier: Final[Identifier]
 
     def __init__(self, identifier: Identifier):

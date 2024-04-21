@@ -22,7 +22,6 @@ class PersistenceError(Exception):
 
 
 class RepositoryProtocol[Entity, Identifier](Protocol):
-
     def save(self, entity: Entity) -> None:
         """
         Save the entity to the storage.
@@ -149,7 +148,7 @@ class MemoryRepository[Entity, Identifier](RepositoryProtocol):
         self._current.append(entity)
 
     def find(
-            self, entity_id: Identifier
+        self, entity_id: Identifier
     ) -> Entity | None:  # Entity[Identifier] can!t be used?
         return self._storage.get(entity_id, None)
 
@@ -170,31 +169,35 @@ class MemoryRepository[Entity, Identifier](RepositoryProtocol):
 
 # INFO: CODE BELOW IS UNUSABLE FOR NOW
 
-IDENTITY_NAME = 'id'
-TABLE_NAME = 'test'
+IDENTITY_NAME = "id"
+TABLE_NAME = "test"
 
 
 class SQLRepository[Entity, Identifier](AbstractSQLRepository):
     """Interesting problems:
-                            * User of repository MUST already know the mapping
-                            * id column name MUST also be known ahead of the time
-                            * does it make even sense to have generic identifier, when ids are numbers?
-                            * but they don't have to be number, or a single column, even though it is a little bit dumb
+    * User of repository MUST already know the mapping
+    * id column name MUST also be known ahead of the time
+    * does it make even sense to have generic identifier, when ids are numbers?
+    * but they don't have to be number, or a single column, even though it is a little bit dumb
     """
 
     def __init__(self, context: Connection, mapping=None) -> None:
         """Initialize the SQLRepository class.
-            Args:
-                context (SQLConnection): Connection to the database
-                mapping (dict): Mapping between keys in used entity and columns in table
+        Args:
+            context (SQLConnection): Connection to the database
+            mapping (dict): Mapping between keys in used entity and columns in table
         """
         # does not actually initialize context for some reason, probably badly set up Inheritance
         super().__init__(context)
         self._cursor = self._context.cursor()
         self._from_key_to_column = mapping or dict()
         print(self._from_key_to_column)
-        self._from_column_to_key = {key: value for key, value in
-                                    zip(self._from_key_to_column.values(), self._from_key_to_column.keys())}
+        self._from_column_to_key = {
+            key: value
+            for key, value in zip(
+                self._from_key_to_column.values(), self._from_key_to_column.keys()
+            )
+        }
 
     def save(self, entity: Entity) -> None:
         if self.exists(entity.identifier):
@@ -202,17 +205,16 @@ class SQLRepository[Entity, Identifier](AbstractSQLRepository):
 
         # this is extremely suspicious part of code
         # this does not unsuprisingly work, he types are not converted well this way into sql instruction value
-        value_names = ', '.join([str(x) for x in entity.data.keys()])
-        values = ', '.join([str(x) for x in entity.data.values()])
+        value_names = ", ".join([str(x) for x in entity.data.keys()])
+        values = ", ".join([str(x) for x in entity.data.values()])
         # TODO: USE MORE UNIVERSAL WAY TO SEND VALUE DATA
-        query = f'INSERT INTO {TABLE_NAME} ({value_names}) VALUES ({values})'
+        query = f"INSERT INTO {TABLE_NAME} ({value_names}) VALUES ({values})"
         self._cursor.execute(query)
 
     def find(
-            self, entity_id: Identifier
+        self, entity_id: Identifier
     ) -> Entity | None:  # Entity[Identifier] can!t be used? maybe can?
-
-        query = f'SELECT * FROM {TABLE_NAME} WHERE {IDENTITY_NAME}={entity_id}'
+        query = f"SELECT * FROM {TABLE_NAME} WHERE {IDENTITY_NAME}={entity_id}"
         self._cursor.execute(query)
         result_values = self._cursor.fetchone()
         # could also possible be x.name, but this id not think is specified by PEP
@@ -233,7 +235,7 @@ class SQLRepository[Entity, Identifier](AbstractSQLRepository):
         return self._cursor.rowcount
 
     def exists(self, entity_id: Identifier) -> bool:
-        query = f'SELECT {IDENTITY_NAME} FROM {TABLE_NAME} WHERE {IDENTITY_NAME}={entity_id}'
+        query = f"SELECT {IDENTITY_NAME} FROM {TABLE_NAME} WHERE {IDENTITY_NAME}={entity_id}"
         self._cursor.execute(query)
         return self._cursor.fetchone() is not None
 
