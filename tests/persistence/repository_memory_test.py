@@ -30,7 +30,7 @@ def test__memory_repository__entity_stored__exists_return_true():
     entity = FakeEntity(1)
     with MemoryRepository(entity) as store:
         assert store.exists(entity) is True
-        
+
 
 # Test write operations.
 

@@ -247,6 +247,7 @@ class SQLRepository[Entity, Identifier](AbstractSQLRepository):
         self._cursor.execute(query)
         return self._cursor.fetchone() is not None
 
+
 # <<< UNUSABLE
 
 
