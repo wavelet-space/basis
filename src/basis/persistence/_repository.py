@@ -3,7 +3,7 @@ Modul obsahuje třídy abstrahující ukládání a načítání entit do/z úlo
 """
 
 from abc import abstractmethod
-from typing import Protocol
+from typing import Protocol, Self
 
 # from ..aggregate import Entity
 from ._connection import Connection
@@ -44,7 +44,7 @@ class RepositoryProtocol[Entity, Identifier](Protocol):
         Count the persisted entities.
         """
 
-    def exists(self, entity: Identifier) -> bool:
+    def exists(self, entity: Entity) -> bool:
         """
         Check if the entity is alrady persisted.
 
@@ -66,7 +66,7 @@ class RepositoryProtocol[Entity, Identifier](Protocol):
         """
         # revert/rollback
 
-    def __enter__(self):  # -> Self supported only from 3.10
+    def __enter__(self) -> Self:
         return self
 
     def __exit__(self, error_type, error_value, traceback) -> None:
@@ -108,7 +108,7 @@ class AbstractSQLRepository[Entity, Identifier](RepositoryProtocol):
         """
 
     @abstractmethod
-    def exists(self, entity_id: Identifier) -> bool:
+    def exists(self, entity: Entity) -> bool:
         """
         Check if the entity is alrady persisted.
 
@@ -134,7 +134,15 @@ class AbstractSQLRepository[Entity, Identifier](RepositoryProtocol):
 
 
 class MemoryRepository[Entity, Identifier](RepositoryProtocol):
-    _storage: dict
+    """
+    The repository storing entities in the computer's memory.
+
+    Examples:
+
+        ...
+    """
+
+    _storage: dict[Identifier, Entity]
     _current: list[Entity]
 
     def __init__(self, *entities) -> None:
@@ -143,7 +151,7 @@ class MemoryRepository[Entity, Identifier](RepositoryProtocol):
         self._current = []
 
     def save(self, entity: Entity) -> None:
-        if self.exists(entity.identifier):
+        if self.exists(entity):
             raise ValueError("Conflict {entity}")
         self._current.append(entity)
 
@@ -156,8 +164,8 @@ class MemoryRepository[Entity, Identifier](RepositoryProtocol):
         # NOTE: no update, so it can just sum commited and uncommited
         return len(self._storage.keys()) + len(self._current)
 
-    def exists(self, entity_id: Identifier) -> bool:
-        return entity_id in self._storage
+    def exists(self, entity: Entity) -> bool:
+        return entity.identifier in self._storage
 
     def commit(self) -> None:
         self._storage |= {e.identifier: e for e in self._current}
@@ -167,7 +175,7 @@ class MemoryRepository[Entity, Identifier](RepositoryProtocol):
         self._current = []
 
 
-# INFO: CODE BELOW IS UNUSABLE FOR NOW
+# >>> UNUSABLE
 
 IDENTITY_NAME = "id"
 TABLE_NAME = "test"
@@ -200,7 +208,7 @@ class SQLRepository[Entity, Identifier](AbstractSQLRepository):
         }
 
     def save(self, entity: Entity) -> None:
-        if self.exists(entity.identifier):
+        if self.exists(entity):
             raise PersistenceError(f"Conflict {entity}")
 
         # this is extremely suspicious part of code
@@ -238,6 +246,8 @@ class SQLRepository[Entity, Identifier](AbstractSQLRepository):
         query = f"SELECT {IDENTITY_NAME} FROM {TABLE_NAME} WHERE {IDENTITY_NAME}={entity_id}"
         self._cursor.execute(query)
         return self._cursor.fetchone() is not None
+
+# <<< UNUSABLE
 
 
 if __name__ == "__main__":

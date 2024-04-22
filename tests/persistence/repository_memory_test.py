@@ -9,13 +9,13 @@ class FakeEntity:
 # Test read operations.
 
 
-def test__memory_repository__there_entity_not_stored__return_none():
+def test__memory_repository__entity_not_stored__return_none():
     with MemoryRepository() as store:
         found = store.find(entity_id=1)
         assert found is None
 
 
-def test__memory_repository__when__entity_stored__return_it():
+def test__memory_repository___entity_stored__return_it():
     with MemoryRepository(FakeEntity(1)) as store:
         found = store.find(entity_id=1)
         assert found.identifier == 1
@@ -25,6 +25,12 @@ def test__memory_repository__three_entites_stored__count_three():
     with MemoryRepository(*[FakeEntity(x) for x in range(3)]) as store:
         assert store.count() == 3
 
+
+def test__memory_repository__entity_stored__exists_return_true():
+    entity = FakeEntity(1)
+    with MemoryRepository(entity) as store:
+        assert store.exists(entity) is True
+        
 
 # Test write operations.
 
