@@ -16,28 +16,35 @@ class PersistenceError(Exception):
         super().__init__(self, message)
         self.errors = errors
 
+    
+class ConflictError(PersistenceError):
+    """
+    Raised when entity can't be saved.
+    """
+
 
 # class AbstractReadableRepository: ...
 # class AbstractWrietableRepository: ...
 
 
 class RepositoryProtocol[Entity, Identifier](Protocol):
+
+    # def next_id() -> Id: ...
+    # def save_all(self, entities) -> None: ...
+    # def find_all(self, predicate) -> Iterable[T]: ...
+
     def save(self, entity: Entity) -> None:
         """
         Save the entity to the storage.
-        """
 
-    # def save_all(self, entities) -> None: ...
+        :param entity: Entity to save.
+        :raises: ConflictError
+        """
 
     def find(self, entity_id: Identifier) -> Entity:  # Entity[Identifier]
         """
         Find the entity in the storage.
         """
-
-    # def find_all(self, predicate) -> Iterable[T]: ...
-
-    # @abstractclassmethod
-    # def next_id() -> Id: ...
 
     def count(self) -> int:
         """
@@ -88,19 +95,12 @@ class AbstractSQLRepository[Entity, Identifier](RepositoryProtocol):
         Save the entity to the storage.
         """
 
-    # def save_all(self, entities) -> None: ...
-
     @abstractmethod
     def find(self, entity_id: Identifier) -> Entity:  # Entity[Identifier]
         """
         Find the entity in the storage.
         """
-
-    # def find_all(self, predicate) -> Iterable[T]: ...
-
-    # @abstractclassmethod
-    # def next_id() -> Id: ...
-
+ 
     @abstractmethod
     def count(self) -> int:
         """
@@ -173,82 +173,6 @@ class MemoryRepository[Entity, Identifier](RepositoryProtocol):
 
     def revert(self) -> None:
         self._current = []
-
-
-# >>> UNUSABLE
-
-IDENTITY_NAME = "id"
-TABLE_NAME = "test"
-
-
-class SQLRepository[Entity, Identifier](AbstractSQLRepository):
-    """Interesting problems:
-    * User of repository MUST already know the mapping
-    * id column name MUST also be known ahead of the time
-    * does it make even sense to have generic identifier, when ids are numbers?
-    * but they don't have to be number, or a single column, even though it is a little bit dumb
-    """
-
-    def __init__(self, context: Connection, mapping=None) -> None:
-        """Initialize the SQLRepository class.
-        Args:
-            context (SQLConnection): Connection to the database
-            mapping (dict): Mapping between keys in used entity and columns in table
-        """
-        # does not actually initialize context for some reason, probably badly set up Inheritance
-        super().__init__(context)
-        self._cursor = self._context.cursor()
-        self._from_key_to_column = mapping or dict()
-        print(self._from_key_to_column)
-        self._from_column_to_key = {
-            key: value
-            for key, value in zip(
-                self._from_key_to_column.values(), self._from_key_to_column.keys()
-            )
-        }
-
-    def save(self, entity: Entity) -> None:
-        if self.exists(entity):
-            raise PersistenceError(f"Conflict {entity}")
-
-        # this is extremely suspicious part of code
-        # this does not unsuprisingly work, he types are not converted well this way into sql instruction value
-        value_names = ", ".join([str(x) for x in entity.data.keys()])
-        values = ", ".join([str(x) for x in entity.data.values()])
-        # TODO: USE MORE UNIVERSAL WAY TO SEND VALUE DATA
-        query = f"INSERT INTO {TABLE_NAME} ({value_names}) VALUES ({values})"
-        self._cursor.execute(query)
-
-    def find(
-        self, entity_id: Identifier
-    ) -> Entity | None:  # Entity[Identifier] can!t be used? maybe can?
-        query = f"SELECT * FROM {TABLE_NAME} WHERE {IDENTITY_NAME}={entity_id}"
-        self._cursor.execute(query)
-        result_values = self._cursor.fetchone()
-        # could also possible be x.name, but this id not think is specified by PEP
-        result_columns = [x[0] for x in self._cursor.description]
-        result = {}
-
-        # should be most likely encapsulated
-        for column, value in zip(result_columns, result_values):
-            key = column
-            if column in self._from_column_to_key.keys():
-                key = self._from_column_to_key[column]
-            result[key] = value
-        entity = None
-        # entity = Entity[Identifier](entity_id, result)
-        return entity
-
-    def count(self) -> int:
-        return self._cursor.rowcount
-
-    def exists(self, entity_id: Identifier) -> bool:
-        query = f"SELECT {IDENTITY_NAME} FROM {TABLE_NAME} WHERE {IDENTITY_NAME}={entity_id}"
-        self._cursor.execute(query)
-        return self._cursor.fetchone() is not None
-
-
-# <<< UNUSABLE
 
 
 if __name__ == "__main__":
