@@ -16,10 +16,10 @@ class PersistenceError(Exception):
         super().__init__(self, message)
         self.errors = errors
 
-    
+
 class ConflictError(PersistenceError):
     """
-    Raised when entity can't be saved.
+    Raised when entity can't be stored due some conflicts.
     """
 
 
@@ -28,7 +28,6 @@ class ConflictError(PersistenceError):
 
 
 class RepositoryProtocol[Entity, Identifier](Protocol):
-
     # def next_id() -> Id: ...
     # def save_all(self, entities) -> None: ...
     # def find_all(self, predicate) -> Iterable[T]: ...
@@ -100,7 +99,7 @@ class AbstractSQLRepository[Entity, Identifier](RepositoryProtocol):
         """
         Find the entity in the storage.
         """
- 
+
     @abstractmethod
     def count(self) -> int:
         """
@@ -131,6 +130,9 @@ class AbstractSQLRepository[Entity, Identifier](RepositoryProtocol):
         """
         # revert/rollback
         self._context.rollback()
+
+
+# The conrete implementations of repositories.
 
 
 class MemoryRepository[Entity, Identifier](RepositoryProtocol):
