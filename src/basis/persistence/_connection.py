@@ -1,4 +1,4 @@
-from typing import Protocol
+from typing import Protocol, Any
 
 from ._cursor import Cursor
 

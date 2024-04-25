@@ -4,6 +4,7 @@ from ._cursor import CursorExtended as CursorExtended
 from ._repository import MemoryRepository as MemoryRepository
 from ._repository import RepositoryProtocol as AbstractRepository
 from ._repository import ConflictError, PersistenceError
+from ._repository import AbstractSQLRepository
 
 __all__ = [
     "Connection",
@@ -12,5 +13,6 @@ __all__ = [
     "AbstractRepository",
     "MemoryRepository",
     "ConflictError",
-    "PersistenceError"
+    "PersistenceError",
+    "AbstractSQLRepository"
 ]

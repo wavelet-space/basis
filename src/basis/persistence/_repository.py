@@ -93,7 +93,7 @@ class RepositoryProtocol[Entity, Identifier](Protocol):
 class AbstractSQLRepository[Entity, Identifier](RepositoryProtocol):
     _context: Connection
 
-    def __init__(self, context: Connection = None, identity_function: Callable = None) -> None:
+    def __init__(self, context: Connection, identity_function: Callable = None) -> None:
         self._identity_function = identity_function
         self._context = context
 
@@ -104,7 +104,7 @@ class AbstractSQLRepository[Entity, Identifier](RepositoryProtocol):
         """
 
     @abstractmethod
-    def find(self, entity_id: Identifier) -> Entity:  # Entity[Identifier]
+    def find(self, entity_id: Identifier) -> Entity | None:  # Entity[Identifier]
         """
         Find the entity in the storage.
         """
