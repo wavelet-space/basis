@@ -17,7 +17,8 @@ license = {text = "MIT"}
 
 dependencies = [
     "psycopg",
-    "psycopg_pool"
+    "psycopg_pool",
+    "requests"
 ]
 
 classifiers = [
