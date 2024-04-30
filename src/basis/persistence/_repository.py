@@ -1,12 +1,14 @@
 """
 Modul obsahuje třídy abstrahující ukládání a načítání entit do/z úložiště (návrhový vzor repository).
 """
-
+import os
 from abc import abstractmethod
 from typing import Protocol, Self, Callable, Iterable
 
 # from ..aggregate import Entity
 from ._connection import Connection
+import requests
+
 
 # https://stackoverflow.com/questions/54118095/
 
@@ -171,7 +173,7 @@ class MemoryRepository[Entity, Identifier](RepositoryProtocol):
         self._current.append(entity)
 
     def find(
-        self, entity_id: Identifier
+            self, entity_id: Identifier
     ) -> Entity | None:  # Entity[Identifier] can!t be used?
         return self._storage.get(entity_id, None)
 
@@ -188,6 +190,94 @@ class MemoryRepository[Entity, Identifier](RepositoryProtocol):
 
     def revert(self) -> None:
         self._current = []
+
+
+class Requester:
+
+    def __init__(self, request_args: dict):
+        self.request_args = request_args
+
+    def get(self, url):
+        return requests.get(url, **self.request_args)
+
+    def put(self, url, data):
+        return requests.put(url, data, **self.request_args)
+
+    def post(self, url, data):
+        return requests.post(url, data, **self.request_args)
+
+    def delete(self, url):
+        return requests.delete(url, **self.request_args)
+
+
+class RestRepository[Entity, Identifier, DataSend](RepositoryProtocol[Entity, Identifier]):
+    def __init__(self, requester: Requester, base_url: str, entity_uri: str = '/items/'):
+        self._requester = requester
+        self._base_url = base_url
+        self._entity_uri = entity_uri
+
+    @abstractmethod
+    def _to_data(self, entity: Entity) -> DataSend:
+        ...
+
+    @abstractmethod
+    def _to_entity(self, data: DataSend) -> Entity:
+        ...
+
+    def save(self, entity: Entity) -> Identifier:
+        """
+        Save the entity to the storage.
+
+        :param entity: Entity to save.
+        :raises: ConflictError
+        """
+        if not self.exists(entity):
+            raise ConflictError(f"Conflict {entity}")
+        data = self._to_data(entity)
+        returned_data = self._requester.post(os.path.join(self._base_url, self._entity_uri), data)
+        entity = self._to_entity(returned_data)
+        identifier = self._get_identifier(entity)
+        return identifier
+
+    def find(self, entity_id: Identifier) -> Entity:  # Entity[Identifier]
+        """
+        Find the entity in the storage.
+        """
+        data = self._requester.get(os.path.join(self._base_url, self._entity_uri, str(entity_id)))
+        if data:
+            return self._to_entity(data)
+        return None
+
+    @abstractmethod
+    def count(self) -> int:
+        """
+        Count the persisted entities.
+        """
+        ...
+
+    def exists(self, entity: Entity) -> bool:
+        """
+        Check if the entity is alrady persisted.
+
+        :param: ...
+        """
+        return self.find(self._get_identifier(entity)) is not None
+
+    def commit(self) -> None:
+        """
+        Commit changes.
+
+        :raises: ...
+        """
+        pass
+
+    def revert(self) -> None:
+        """
+        Revert (abort) changes.
+
+        :raises: ...
+        """
+        raise NotImplemented("Rest api cannot roll back.")
 
 
 if __name__ == "__main__":
