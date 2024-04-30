@@ -2,8 +2,6 @@ from ..aggregate import Entity
 import json
 from _repository import AbstractSQLRepository, ConflictError, Connection
 import datetime
-import psycopg2
-import sqlite3
 from typing import Callable
 
 

@@ -277,7 +277,7 @@ class RestRepository[Entity, Identifier, DataSend](RepositoryProtocol[Entity, Id
 
         :raises: ...
         """
-        raise NotImplemented("Rest api cannot roll back.")
+        raise NotImplementedError("Rest api cannot roll back.")
 
 
 if __name__ == "__main__":
