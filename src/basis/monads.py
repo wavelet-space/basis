@@ -1,4 +1,5 @@
 """
+Simple monadic architecture for Python.
 Monads and Monadic Pipelines in Python.
 
 Some notes inspired by Haskell documentation:
@@ -8,6 +9,14 @@ Monad is a triple M := (m, return, >>=) where
 - m is a type constructor
 - return is a function `return :: a -> m a`
 - >>= is an operator called bind `>>= :: m a -> (a -> m b) -> m b`
+
+Features
+- Functor (Mappable)
+- Applicative (Flatten + Mappable)
+
+Monad types
+- Option aka Maybe
+- Result aka Either
 
 """
 
