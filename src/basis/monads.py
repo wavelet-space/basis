@@ -20,10 +20,8 @@ Monad types
 
 """
 
-from abc import abstractmethod
 from typing import Self
-from typing import Generic, Protocol, Any, T, TypeVar, Callable, TypeAlias, runtime_checkable, final
-from typing import TypeVar, Protocol, Callable
+from typing import Generic, Protocol, TypeVar, Callable, TypeAlias, runtime_checkable, final
 # import typing_extensions
 
 from dataclasses import dataclass
