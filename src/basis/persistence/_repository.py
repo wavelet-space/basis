@@ -42,7 +42,7 @@ class RepositoryProtocol[Entity, Identifier](Protocol):
             identifier = self._identity_function(entity)
         return identifier
 
-    def save(self, entity: Entity) -> None:
+    def save(self, entity: Entity) -> Identifier:
         """
         Save the entity to the storage.
 
@@ -100,7 +100,7 @@ class AbstractSQLRepository[Entity, Identifier](RepositoryProtocol):
         self._context = context
 
     @abstractmethod
-    def save(self, entity: Entity) -> None:
+    def save(self, entity: Entity) -> Identifier:
         """
         Save the entity to the storage.
         """
@@ -167,10 +167,11 @@ class MemoryRepository[Entity, Identifier](RepositoryProtocol):
         self._storage |= {self._get_identifier(e): e for e in entities}
         self._current = []
 
-    def save(self, entity: Entity) -> None:
+    def save(self, entity: Entity) -> Identifier:
         if self.exists(entity):
             raise ConflictError("Conflict {entity}")
         self._current.append(entity)
+        return self._get_identifier(entity)
 
     def find(
             self, entity_id: Identifier
@@ -194,7 +195,7 @@ class MemoryRepository[Entity, Identifier](RepositoryProtocol):
 
 class Requester:
 
-    def __init__(self, request_args: dict):
+    def __init__(self, **request_args: dict):
         self.request_args = request_args
 
     def get(self, url):
@@ -211,8 +212,8 @@ class Requester:
 
 
 class RestRepository[Entity, Identifier, DataSend](RepositoryProtocol[Entity, Identifier]):
-    def __init__(self, requester: Requester, base_url: str, entity_uri: str = '/items/'):
-        self._requester = requester
+    def __init__(self, base_url: str, entity_uri: str, **request_args):
+        self._requester = Requester(**request_args)
         self._base_url = base_url
         self._entity_uri = entity_uri
 
