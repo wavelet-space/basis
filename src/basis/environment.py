@@ -1,3 +1,5 @@
+# The original source under BSD-3 license was obtained from https://github.com/theskumar/python-dotenv and modified.
+
 import codecs
 import io
 import logging
