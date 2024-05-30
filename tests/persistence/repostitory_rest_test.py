@@ -120,12 +120,12 @@ class ExampleRestRepository(RestRepository[FakeEntity, int, dict[str, Any]]):
         return self._requester.get_count_with(os.path.join(self._base_url, self._entity_uri))
 
 
-def test_empty_repository():
+def test__rest_repository__empty_repository():
     repository = ExampleRestRepository('empty')
     assert repository.count() == 0
 
 
-def test_save_and_get():
+def test__rest_repository__save_and_get():
     repository = ExampleRestRepository('save')
 
     entity = FakeEntity()
@@ -170,7 +170,7 @@ def test__rest_repository___entity_stored__return_it():
         assert found.identifier == 25
 
 
-def test__memory_repository__three_entites_stored__count_three():
+def test__rest_repository__three_entites_stored__count_three():
     server = {'test': {'not_test': {25: {FLOAT: 1.15,
                                          'id': 25,
                                          TEXT: 'jkl'},
@@ -188,7 +188,7 @@ def test__memory_repository__three_entites_stored__count_three():
         assert store.count() == 3
 
 
-def test__memory_repository__entity_stored__exists_return_true():
+def test__rest_repository__entity_stored__exists_return_true():
     server = {'test': {'not_test': {25: {FLOAT: 1.15,
                                          'id': 25,
                                          TEXT: 'jkl'}
@@ -204,7 +204,7 @@ def test__memory_repository__entity_stored__exists_return_true():
 # Test write operations.
 
 
-def test__memory_repository__entities_stored():
+def test__rest_repository__entities_stored():
     store = ExampleRestRepository('test')
     store.save(FakeEntity(real=15, text='jk'))
     store.save(FakeEntity(real=13, text='f'))
