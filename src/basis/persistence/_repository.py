@@ -205,6 +205,7 @@ class Requester:
         return requests.put(url, data, **self.request_args)
 
     def post(self, url, data):
+
         return requests.post(url, data, **self.request_args)
 
     def delete(self, url):
@@ -232,7 +233,7 @@ class RestRepository[Entity, Identifier, DataSend](RepositoryProtocol[Entity, Id
         :param entity: Entity to save.
         :raises: ConflictError
         """
-        if not self.exists(entity):
+        if self.exists(entity):
             raise ConflictError(f"Conflict {entity}")
         data = self._to_data(entity)
         returned_data = self._requester.post(os.path.join(self._base_url, self._entity_uri), data)
@@ -244,6 +245,8 @@ class RestRepository[Entity, Identifier, DataSend](RepositoryProtocol[Entity, Id
         """
         Find the entity in the storage.
         """
+        if entity_id is None:
+            return None
         data = self._requester.get(os.path.join(self._base_url, self._entity_uri, str(entity_id)))
         if data:
             return self._to_entity(data)
