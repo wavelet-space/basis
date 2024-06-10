@@ -1,6 +1,6 @@
-# hexen
+# Wavelet
 
-Hexagonal architecture and other witchcraft.
+Python Framework for Domain-Driven Design, Event Sourcing Hexagonal architecture, and other witchcraft.
 
 [![main](https://github.com/wavelet-space/basis/actions/workflows/main.yml/badge.svg)](https://github.com/wavelet-space/basis/actions/workflows/main.yml)
 [![docs](https://github.com/wavelet-space/basis/actions/workflows/docs.yml/badge.svg)](https://github.com/wavelet-space/basis/actions/workflows/docs.yml)
