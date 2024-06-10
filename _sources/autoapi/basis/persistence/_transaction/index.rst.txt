@@ -1,0 +1,90 @@
+basis.persistence._transaction
+==============================
+
+.. py:module:: basis.persistence._transaction
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   basis.persistence._transaction.Transaction
+   basis.persistence._transaction.PostgreSQLTransaction
+   basis.persistence._transaction.FileSystemTransaction
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   basis.persistence._transaction.transactional
+
+
+Module Contents
+---------------
+
+.. py:function:: transactional()
+
+   A decorator for functions to run in transaction.
+
+
+.. py:class:: Transaction
+
+   Bases: :py:obj:`abc.ABC`
+
+
+   The transaction represents a group of actions that should be executed as a unit.
+   When something goes wrong, everything should be reverted to its original state.
+   Use this class to implement the Unit of Work pattern.
+
+
+   .. py:method:: __enter__() -> Self
+
+
+   .. py:method:: __exit__(exc_type, exc_value, exc_traceback) -> None
+      :abstractmethod:
+
+
+
+   .. py:method:: commit()
+      :abstractmethod:
+
+
+
+   .. py:method:: revert()
+      :abstractmethod:
+
+
+
+.. py:class:: PostgreSQLTransaction
+
+   Bases: :py:obj:`Transaction`
+
+
+   The transaction represents a group of actions that should be executed as a unit.
+   When something goes wrong, everything should be reverted to its original state.
+   Use this class to implement the Unit of Work pattern.
+
+
+   .. py:method:: __enter__() -> Self
+
+
+   .. py:method:: __exit__() -> None
+
+
+.. py:class:: FileSystemTransaction(path: pathlib.Path, timeout=42)
+
+   Bases: :py:obj:`Transaction`
+
+
+   An atomic operation for file system.
+
+
+   .. py:method:: __enter__() -> Self
+
+
+   .. py:method:: __exit__() -> None
+
+

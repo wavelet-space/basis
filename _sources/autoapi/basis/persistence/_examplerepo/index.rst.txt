@@ -1,0 +1,176 @@
+basis.persistence._examplerepo
+==============================
+
+.. py:module:: basis.persistence._examplerepo
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   basis.persistence._examplerepo.FLOAT
+   basis.persistence._examplerepo.DATE
+   basis.persistence._examplerepo.JSON
+   basis.persistence._examplerepo.TEXT
+   basis.persistence._examplerepo.INTEGER
+   basis.persistence._examplerepo.TIMESTAMP
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   basis.persistence._examplerepo.Entity
+   basis.persistence._examplerepo.Entity1
+   basis.persistence._examplerepo.SqlRepository1
+   basis.persistence._examplerepo.MockRequester
+   basis.persistence._examplerepo.ExampleRestRepository
+
+
+Module Contents
+---------------
+
+.. py:class:: Entity(identifier: Identifier)
+
+   An entity object in the terms of domain-driven design.
+
+   :tparam: A domain entity identifier type.
+   :param identifier: The entity's identifier unique accros aggregate.
+
+
+   .. py:property:: identifier
+      :type: Identifier
+
+
+
+   .. py:method:: __eq__(that: object) -> bool
+
+      Return self==value.
+
+
+
+   .. py:method:: __hash__() -> int
+
+      Return hash(self).
+
+
+
+   .. py:method:: __str__() -> str
+
+      Return str(self).
+
+
+
+   .. py:attribute:: __repr__
+
+
+.. py:class:: Entity1(identifier: int = None, real: float = None, date: datetime.date = None, json_obj=None, text: str = None, integer: int = None, timestamp: datetime.time = None)
+
+   Bases: :py:obj:`basis.aggregate.Entity`\ [\ :py:obj:`int`\ ]
+
+
+   An entity object in the terms of domain-driven design.
+
+   :tparam: A domain entity identifier type.
+   :param identifier: The entity's identifier unique accros aggregate.
+
+
+.. py:class:: SqlRepository1(context: _repository.Connection, placeholder: str, table_name: str, identity_function: Callable = None)
+
+   Bases: :py:obj:`_repository.AbstractSQLRepository`\ [\ :py:obj:`Entity1`\ , :py:obj:`int`\ ]
+
+
+   Implemented an Example Sql repository
+   It should work for most sql databases due to simplicity of used queries.
+
+   The only problem for now, is that when fetching, simple databases cannot convert it back to the original format
+
+   For sqlite handles datetime fine, but when fetching it returns as date string. 
+
+
+   .. py:method:: save(entity: Entity1) -> int
+
+      Save the entity to the storage.
+
+
+
+   .. py:method:: find(entity_id: int) -> Entity1 | None
+
+      Find the entity in the storage.
+
+
+
+   .. py:method:: count() -> int
+
+      Count the persisted entities.
+
+
+
+   .. py:method:: exists(entity: Entity1) -> bool
+
+      Check if the entity is already persisted.
+
+      :param: ...
+
+
+
+.. py:class:: MockRequester
+
+   .. py:attribute:: _server
+
+
+   .. py:method:: get(url) -> dict
+
+
+   .. py:method:: put(url, data: dict)
+
+
+   .. py:method:: post(url, data: dict)
+
+
+   .. py:method:: delete(url: str)
+
+
+   .. py:method:: get_count_with(key_start: str) -> int
+
+
+.. py:data:: FLOAT
+   :value: 'FLOAT'
+
+
+.. py:data:: DATE
+   :value: 'DATE'
+
+
+.. py:data:: JSON
+   :value: 'JSON'
+
+
+.. py:data:: TEXT
+   :value: 'TEXT'
+
+
+.. py:data:: INTEGER
+   :value: 'INTEGER'
+
+
+.. py:data:: TIMESTAMP
+   :value: 'TIMESTAMP'
+
+
+.. py:class:: ExampleRestRepository(entity_uri)
+
+   Bases: :py:obj:`_repository.RestRepository`\ [\ :py:obj:`Entity1`\ , :py:obj:`int`\ , :py:obj:`dict`\ [\ :py:obj:`str`\ , :py:obj:`Any`\ ]\ ]
+
+
+   .. py:method:: _to_data(entity: Entity1) -> dict[str, Any]
+
+
+   .. py:method:: _to_entity(data: dict[str, Any]) -> Entity1
+
+
+   .. py:method:: count() -> int
+
+

@@ -1,0 +1,24 @@
+basis.network
+=============
+
+.. py:module:: basis.network
+
+.. autoapi-nested-parse::
+
+   Contains network related functions and classes.
+
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   basis.network.read_public_ip
+
+
+Module Contents
+---------------
+
+.. py:function:: read_public_ip() -> str
+

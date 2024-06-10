@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>basis.monads &mdash; basis  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=fd3f3429" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="basis.monads_test" href="../monads_test/index.html" />
+    <link rel="prev" title="basis.environment" href="../environment/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            basis
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../result.html">Result</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../persistence.html">Persistence</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">basis</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../index.html#subpackages">Subpackages</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../_async/index.html">basis._async</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../_project/index.html">basis._project</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../environment/index.html">basis.environment</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">basis.monads</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../monads_test/index.html">basis.monads_test</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../network/index.html">basis.network</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../protocols/index.html">basis.protocols</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../values/index.html">basis.values</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#functions">Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#package-contents">Package Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../actor/index.html">actor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../service/index.html">service</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../message/index.html">message</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">basis</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">basis</a></li>
+      <li class="breadcrumb-item active">basis.monads</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/autoapi/basis/monads/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-basis.monads">
+<span id="basis-monads"></span><h1>basis.monads<a class="headerlink" href="#module-basis.monads" title="Link to this heading"></a></h1>
+<p>Simple monadic architecture for Python.
+Monads and Monadic Pipelines in Python.</p>
+<p>Some notes inspired by Haskell documentation:</p>
+<p>Monad is a triple M := (m, return, &gt;&gt;=) where</p>
+<ul class="simple">
+<li><p>m is a type constructor</p></li>
+<li><p>return is a function <cite>return :: a -&gt; m a</cite></p></li>
+<li><p>&gt;&gt;= is an operator called bind <cite>&gt;&gt;= :: m a -&gt; (a -&gt; m b) -&gt; m b</cite></p></li>
+</ul>
+<p>Features
+- Functor (Mappable)
+- Applicative (Flatten + Mappable)</p>
+<p>Monad types
+- Option aka Maybe
+- Result aka Either</p>
+<section id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#basis.monads.T" title="basis.monads.T"><code class="xref py py-obj docutils literal notranslate"><span class="pre">T</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#basis.monads.U" title="basis.monads.U"><code class="xref py py-obj docutils literal notranslate"><span class="pre">U</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#basis.monads.Function1" title="basis.monads.Function1"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Function1</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#basis.monads.a" title="basis.monads.a"><code class="xref py py-obj docutils literal notranslate"><span class="pre">a</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#basis.monads.Functor" title="basis.monads.Functor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Functor</span></code></a></p></td>
+<td><p>The functor is used for values that can be mapped over.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#basis.monads.Applicative" title="basis.monads.Applicative"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Applicative</span></code></a></p></td>
+<td><p>The applicative is an extension of functor.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#basis.monads.Monadic" title="basis.monads.Monadic"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Monadic</span></code></a></p></td>
+<td><p>Base class for protocol classes.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#basis.monads.Monad" title="basis.monads.Monad"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Monad</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#basis.monads.Option" title="basis.monads.Option"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Option</span></code></a></p></td>
+<td><p>This monad, also called Maybe, is used for possibly missing values.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#basis.monads.Nothing" title="basis.monads.Nothing"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Nothing</span></code></a></p></td>
+<td><p>This monad, also called Maybe, is used for possibly missing values.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#basis.monads.Something" title="basis.monads.Something"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Something</span></code></a></p></td>
+<td><p>This monad, also called Maybe, is used for possibly missing values.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#basis.monads.Result" title="basis.monads.Result"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Result</span></code></a></p></td>
+<td><p>This monad, also called Either, wraps a value of operation which can fail.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#basis.monads.Success" title="basis.monads.Success"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Success</span></code></a></p></td>
+<td><p>This monad, also called Either, wraps a value of operation which can fail.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#basis.monads.Failure" title="basis.monads.Failure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Failure</span></code></a></p></td>
+<td><p>This monad, also called Either, wraps a value of operation which can fail.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
+<dl class="py data">
+<dt class="sig sig-object py" id="basis.monads.T">
+<span class="sig-prename descclassname"><span class="pre">basis.monads.</span></span><span class="sig-name descname"><span class="pre">T</span></span><a class="headerlink" href="#basis.monads.T" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="basis.monads.U">
+<span class="sig-prename descclassname"><span class="pre">basis.monads.</span></span><span class="sig-name descname"><span class="pre">U</span></span><a class="headerlink" href="#basis.monads.U" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="basis.monads.Function1">
+<span class="sig-prename descclassname"><span class="pre">basis.monads.</span></span><span class="sig-name descname"><span class="pre">Function1</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">TypeAlias</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">Callable[[T],</span> <span class="pre">U]</span></em><a class="headerlink" href="#basis.monads.Function1" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="basis.monads.Functor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">basis.monads.</span></span><span class="sig-name descname"><span class="pre">Functor</span></span><a class="headerlink" href="#basis.monads.Functor" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">Protocol</span></code>[<a class="reference internal" href="#basis.monads.T" title="basis.monads.T"><code class="xref py py-obj docutils literal notranslate"><span class="pre">T</span></code></a>, <a class="reference internal" href="#basis.monads.U" title="basis.monads.U"><code class="xref py py-obj docutils literal notranslate"><span class="pre">U</span></code></a>]</p>
+<p>The functor is used for values that can be mapped over.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="basis.monads.Functor.map">
+<span class="sig-name descname"><span class="pre">map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callable</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">U</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">U</span></span></span><a class="headerlink" href="#basis.monads.Functor.map" title="Link to this definition"></a></dt>
+<dd><p>Map a function over the wrapped value.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="basis.monads.Applicative">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">basis.monads.</span></span><span class="sig-name descname"><span class="pre">Applicative</span></span><a class="headerlink" href="#basis.monads.Applicative" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#basis.monads.Functor" title="basis.monads.Functor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Functor</span></code></a>[<a class="reference internal" href="#basis.monads.T" title="basis.monads.T"><code class="xref py py-obj docutils literal notranslate"><span class="pre">T</span></code></a>, <a class="reference internal" href="#basis.monads.U" title="basis.monads.U"><code class="xref py py-obj docutils literal notranslate"><span class="pre">U</span></code></a>]</p>
+<p>The applicative is an extension of functor.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="basis.monads.Applicative.apply">
+<span class="sig-name descname"><span class="pre">apply</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callable</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">U</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Self</span></span></span><a class="headerlink" href="#basis.monads.Applicative.apply" title="Link to this definition"></a></dt>
+<dd><p>Jak to funguje:
+Mějme funktor <cite>F(T)</cite> a funkci <cite>f(T) -&gt; U</cite>. Potom metoda apply
+vezme hodnotu z funktoru F a aplikuje na ní funkci f a zabalí ji zpět do funktoru, který vrací.</p>
+<p>Metoda se též nazývaná <strong>`fmap`</strong> s operátorovým aliasem <cite>&lt;*&gt;</cite>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="basis.monads.Monadic">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">basis.monads.</span></span><span class="sig-name descname"><span class="pre">Monadic</span></span><a class="headerlink" href="#basis.monads.Monadic" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">Protocol</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">Generic</span></code>[<a class="reference internal" href="#basis.monads.T" title="basis.monads.T"><code class="xref py py-obj docutils literal notranslate"><span class="pre">T</span></code></a>]</p>
+<p>Base class for protocol classes.</p>
+<p>Protocol classes are defined as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Proto</span><span class="p">(</span><span class="n">Protocol</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">meth</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="o">...</span>
+</pre></div>
+</div>
+<p>Such classes are primarily used with static type checkers that recognize
+structural subtyping (static duck-typing).</p>
+<p>For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">C</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">meth</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">0</span>
+
+<span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Proto</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">x</span><span class="o">.</span><span class="n">meth</span><span class="p">()</span>
+
+<span class="n">func</span><span class="p">(</span><span class="n">C</span><span class="p">())</span>  <span class="c1"># Passes static type check</span>
+</pre></div>
+</div>
+<p>See PEP 544 for details. Protocol classes decorated with
+&#64;typing.runtime_checkable act as simple-minded runtime protocols that check
+only the presence of given attributes, ignoring their type signatures.
+Protocol classes can be generic, they are defined as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">GenProto</span><span class="p">[</span><span class="n">T</span><span class="p">](</span><span class="n">Protocol</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">meth</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
+        <span class="o">...</span>
+</pre></div>
+</div>
+<dl class="py property">
+<dt class="sig sig-object py" id="basis.monads.Monadic.value">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">value</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">T</span></em><a class="headerlink" href="#basis.monads.Monadic.value" title="Link to this definition"></a></dt>
+<dd><p>Get the wrapped value.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="basis.monads.Monadic.bind">
+<span class="sig-name descname"><span class="pre">bind</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callable</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Self</span></span></span><a class="headerlink" href="#basis.monads.Monadic.bind" title="Link to this definition"></a></dt>
+<dd><p>Apply function to the value.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="basis.monads.Monadic.__shift__">
+<span class="sig-name descname"><span class="pre">__shift__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callable</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Self</span></span></span><a class="headerlink" href="#basis.monads.Monadic.__shift__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="basis.monads.Monad">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">basis.monads.</span></span><span class="sig-name descname"><span class="pre">Monad</span></span><a class="headerlink" href="#basis.monads.Monad" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">Generic</span></code>[<a class="reference internal" href="#basis.monads.T" title="basis.monads.T"><code class="xref py py-obj docutils literal notranslate"><span class="pre">T</span></code></a>, <a class="reference internal" href="#basis.monads.U" title="basis.monads.U"><code class="xref py py-obj docutils literal notranslate"><span class="pre">U</span></code></a>]</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="basis.monads.Monad.value">
+<span class="sig-name descname"><span class="pre">value</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">T</span></em><a class="headerlink" href="#basis.monads.Monad.value" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="basis.monads.Monad.bind">
+<span class="sig-name descname"><span class="pre">bind</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callable</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Function1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Self</span></span></span><a class="headerlink" href="#basis.monads.Monad.bind" title="Link to this definition"></a></dt>
+<dd><p>Apply monadic function to the value.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="basis.monads.Monad.__call__">
+<span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callable</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Function1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Self</span></span></span><a class="headerlink" href="#basis.monads.Monad.__call__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="basis.monads.Monad.__or__">
+<span class="sig-name descname"><span class="pre">__or__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">some</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Self</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Callable</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Self</span></span></span><a class="headerlink" href="#basis.monads.Monad.__or__" title="Link to this definition"></a></dt>
+<dd><p>A <a class="reference internal" href="#basis.monads.Monad.bind" title="basis.monads.Monad.bind"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bind()</span></code></a> method operator alias.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="basis.monads.Monad.__shift__">
+<span class="sig-name descname"><span class="pre">__shift__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">some</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Self</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Callable</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Self</span></span></span><a class="headerlink" href="#basis.monads.Monad.__shift__" title="Link to this definition"></a></dt>
+<dd><p>A <a class="reference internal" href="#basis.monads.Monad.bind" title="basis.monads.Monad.bind"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bind()</span></code></a> method operator alias.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="basis.monads.Monad.__ror__">
+<span class="sig-name descname"><span class="pre">__ror__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">some</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Self</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Callable</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Self</span></span></span><a class="headerlink" href="#basis.monads.Monad.__ror__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="basis.monads.Option">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">basis.monads.</span></span><span class="sig-name descname"><span class="pre">Option</span></span><a class="headerlink" href="#basis.monads.Option" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">Generic</span></code>[<a class="reference internal" href="#basis.monads.T" title="basis.monads.T"><code class="xref py py-obj docutils literal notranslate"><span class="pre">T</span></code></a>, <a class="reference internal" href="#basis.monads.U" title="basis.monads.U"><code class="xref py py-obj docutils literal notranslate"><span class="pre">U</span></code></a>]</p>
+<p>This monad, also called Maybe, is used for possibly missing values.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="basis.monads.Nothing">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">basis.monads.</span></span><span class="sig-name descname"><span class="pre">Nothing</span></span><a class="headerlink" href="#basis.monads.Nothing" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#basis.monads.Option" title="basis.monads.Option"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Option</span></code></a>[<a class="reference internal" href="#basis.monads.T" title="basis.monads.T"><code class="xref py py-obj docutils literal notranslate"><span class="pre">T</span></code></a>, <a class="reference internal" href="#basis.monads.U" title="basis.monads.U"><code class="xref py py-obj docutils literal notranslate"><span class="pre">U</span></code></a>]</p>
+<p>This monad, also called Maybe, is used for possibly missing values.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="basis.monads.Something">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">basis.monads.</span></span><span class="sig-name descname"><span class="pre">Something</span></span><a class="headerlink" href="#basis.monads.Something" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#basis.monads.Option" title="basis.monads.Option"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Option</span></code></a>[<a class="reference internal" href="#basis.monads.T" title="basis.monads.T"><code class="xref py py-obj docutils literal notranslate"><span class="pre">T</span></code></a>, <a class="reference internal" href="#basis.monads.U" title="basis.monads.U"><code class="xref py py-obj docutils literal notranslate"><span class="pre">U</span></code></a>]</p>
+<p>This monad, also called Maybe, is used for possibly missing values.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="basis.monads.Something.value">
+<span class="sig-name descname"><span class="pre">value</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">T</span></em><a class="headerlink" href="#basis.monads.Something.value" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="basis.monads.Result">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">basis.monads.</span></span><span class="sig-name descname"><span class="pre">Result</span></span><a class="headerlink" href="#basis.monads.Result" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">Generic</span></code>[<a class="reference internal" href="#basis.monads.T" title="basis.monads.T"><code class="xref py py-obj docutils literal notranslate"><span class="pre">T</span></code></a>, <a class="reference internal" href="#basis.monads.U" title="basis.monads.U"><code class="xref py py-obj docutils literal notranslate"><span class="pre">U</span></code></a>]</p>
+<p>This monad, also called Either, wraps a value of operation which can fail.</p>
+<p>The <a class="reference internal" href="#basis.monads.Result" title="basis.monads.Result"><code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code></a> subclasses (variants) are <a class="reference internal" href="#basis.monads.Success" title="basis.monads.Success"><code class="xref py py-class docutils literal notranslate"><span class="pre">Success</span></code></a> and <a class="reference internal" href="#basis.monads.Failure" title="basis.monads.Failure"><code class="xref py py-class docutils literal notranslate"><span class="pre">Failure</span></code></a>.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="basis.monads.Result.map">
+<span class="sig-name descname"><span class="pre">map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">function</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">U</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">U</span></span></span><a class="headerlink" href="#basis.monads.Result.map" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="basis.monads.Success">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">basis.monads.</span></span><span class="sig-name descname"><span class="pre">Success</span></span><a class="headerlink" href="#basis.monads.Success" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#basis.monads.Result" title="basis.monads.Result"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Result</span></code></a>[<a class="reference internal" href="#basis.monads.T" title="basis.monads.T"><code class="xref py py-obj docutils literal notranslate"><span class="pre">T</span></code></a>, <a class="reference internal" href="#basis.monads.U" title="basis.monads.U"><code class="xref py py-obj docutils literal notranslate"><span class="pre">U</span></code></a>]</p>
+<p>This monad, also called Either, wraps a value of operation which can fail.</p>
+<p>The <a class="reference internal" href="#basis.monads.Result" title="basis.monads.Result"><code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code></a> subclasses (variants) are <a class="reference internal" href="#basis.monads.Success" title="basis.monads.Success"><code class="xref py py-class docutils literal notranslate"><span class="pre">Success</span></code></a> and <a class="reference internal" href="#basis.monads.Failure" title="basis.monads.Failure"><code class="xref py py-class docutils literal notranslate"><span class="pre">Failure</span></code></a>.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="basis.monads.Success.value">
+<span class="sig-name descname"><span class="pre">value</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">T</span></em><a class="headerlink" href="#basis.monads.Success.value" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="basis.monads.Failure">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">basis.monads.</span></span><span class="sig-name descname"><span class="pre">Failure</span></span><a class="headerlink" href="#basis.monads.Failure" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#basis.monads.Result" title="basis.monads.Result"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Result</span></code></a>[<a class="reference internal" href="#basis.monads.T" title="basis.monads.T"><code class="xref py py-obj docutils literal notranslate"><span class="pre">T</span></code></a>, <a class="reference internal" href="#basis.monads.U" title="basis.monads.U"><code class="xref py py-obj docutils literal notranslate"><span class="pre">U</span></code></a>]</p>
+<p>This monad, also called Either, wraps a value of operation which can fail.</p>
+<p>The <a class="reference internal" href="#basis.monads.Result" title="basis.monads.Result"><code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code></a> subclasses (variants) are <a class="reference internal" href="#basis.monads.Success" title="basis.monads.Success"><code class="xref py py-class docutils literal notranslate"><span class="pre">Success</span></code></a> and <a class="reference internal" href="#basis.monads.Failure" title="basis.monads.Failure"><code class="xref py py-class docutils literal notranslate"><span class="pre">Failure</span></code></a>.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="basis.monads.Failure.error">
+<span class="sig-name descname"><span class="pre">error</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">U</span></em><a class="headerlink" href="#basis.monads.Failure.error" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="basis.monads.a">
+<span class="sig-prename descclassname"><span class="pre">basis.monads.</span></span><span class="sig-name descname"><span class="pre">a</span></span><a class="headerlink" href="#basis.monads.a" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../environment/index.html" class="btn btn-neutral float-left" title="basis.environment" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../monads_test/index.html" class="btn btn-neutral float-right" title="basis.monads_test" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Wavelet.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

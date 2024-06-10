@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wavelet &mdash; basis  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=fd3f3429" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Introduction" href="introduction.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            basis
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="result.html">Result</a></li>
+<li class="toctree-l1"><a class="reference internal" href="persistence.html">Persistence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autoapi/index.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">basis</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Wavelet</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="wavelet">
+<h1>Wavelet<a class="headerlink" href="#wavelet" title="Link to this heading"></a></h1>
+<p>Python Framework for Domain-Driven Design, Event Sourcing Hexagonal architecture, and other witchcraft.</p>
+<p><a class="reference external" href="https://github.com/wavelet-space/basis/actions/workflows/main.yml"><img alt="main" src="https://github.com/wavelet-space/basis/actions/workflows/main.yml/badge.svg" /></a>
+<a class="reference external" href="https://github.com/wavelet-space/basis/actions/workflows/docs.yml"><img alt="docs" src="https://github.com/wavelet-space/basis/actions/workflows/docs.yml/badge.svg" /></a></p>
+<p><strong>Useful things shared across Python based projects.</strong></p>
+<p>This serves as a focal point for other packages. Apparently some modules could exist as stand-alone packages, but for simplicity, we distribute them as a unified package. The reason is that this package, or modules, is constantly being added and modified, and managing one package is much easier than several packages at once. Our goal is to contain classes and functions for both normal programming and more specialized code, e.g., for optimization and numerical programming. It fulfills a similar role as, e.g., <a class="reference external" href="https://github.com/facebook/folly">https://github.com/facebook/folly</a> or <a class="reference external" href="https://github.com/bloomberg/bde">https://github.com/bloomberg/bde</a>, but for Python instead of C++.</p>
+<section id="description">
+<h2>Description<a class="headerlink" href="#description" title="Link to this heading"></a></h2>
+<section id="motivation">
+<h3>Motivation<a class="headerlink" href="#motivation" title="Link to this heading"></a></h3>
+<p>The goal of this project is to centralize code that reappears over projects, and/or we want to point out and document some patterns and solutions to the problems.</p>
+</section>
+<section id="features">
+<h3>Features<a class="headerlink" href="#features" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>datetime, periods, and calendar</p>
+<ul>
+<li><p>https://www.geonames.org/export/</p></li>
+</ul>
+</li>
+<li><p>patterns (domain driven design, gang-of-four)</p>
+<ul>
+<li><p>repository pattern</p></li>
+<li><p>specification pattern</p></li>
+</ul>
+</li>
+<li><p>transaction</p>
+<ul>
+<li><p>file system</p></li>
+</ul>
+</li>
+<li><p>numbers</p>
+<ul>
+<li><p>natural</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
+<p>Please install the latest version from main branch on GitHub [^1] with following command.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>git+https://github.com/wavelet-space/basis.git
+</pre></div>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html#bounded-context">Bounded Context</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html#aggregate">Aggregate</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="result.html">Result</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="result.html#install">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="result.html#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="result.html#observers">Observers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="result.html#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="persistence.html">Persistence</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="persistence.html#priklady">Příklady</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="autoapi/index.html">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="autoapi/basis/index.html">basis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="autoapi/actor/index.html">actor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="autoapi/service/index.html">service</a></li>
+<li class="toctree-l2"><a class="reference internal" href="autoapi/message/index.html">message</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="indices-and-tables">
+<h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="introduction.html" class="btn btn-neutral float-right" title="Introduction" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Wavelet.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

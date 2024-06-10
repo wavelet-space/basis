@@ -1,0 +1,72 @@
+basis.utilities.numbers
+=======================
+
+.. py:module:: basis.utilities.numbers
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   basis.utilities.numbers.r
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   basis.utilities.numbers.Range
+   basis.utilities.numbers.Natural
+
+
+Module Contents
+---------------
+
+.. py:class:: Range
+
+   .. py:attribute:: minimum
+      :type:  Range.T
+
+
+   .. py:attribute:: maximum
+      :type:  Range.T
+
+
+   .. py:property:: span
+      :type: T
+
+
+
+   .. py:method:: __post_init__()
+
+
+.. py:class:: Natural(value: int | float)
+
+   A natural number :math:`\mathbb{N}`.
+
+
+   .. py:property:: value
+
+
+   .. py:method:: __hash__() -> int
+
+      Return hash(self).
+
+
+
+   .. py:method:: __eq__(other) -> bool
+
+      Return self==value.
+
+
+
+   .. py:method:: __repr__() -> str
+
+      Return repr(self).
+
+
+
+.. py:data:: r
+

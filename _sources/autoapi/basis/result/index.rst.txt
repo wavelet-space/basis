@@ -1,0 +1,116 @@
+basis.result
+============
+
+.. py:module:: basis.result
+
+.. autoapi-nested-parse::
+
+   Modul obsahuje monádu :py:class:`Result` s podtypy :class:`Success` a :class:`Failure` reprezentující
+   správnou respektive chybnou hodnotu. 
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   basis.result.Value
+   basis.result.Error
+   basis.result.s
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   basis.result.Nothing
+   basis.result.Result
+   basis.result.Success
+   basis.result.Failure
+
+
+Package Contents
+----------------
+
+.. py:data:: Value
+
+.. py:data:: Error
+
+.. py:class:: Nothing
+
+   Represents the missing value.
+
+
+.. py:class:: Result
+
+   Bases: :py:obj:`Generic`\ [\ :py:obj:`Value`\ , :py:obj:`Error`\ ]
+
+
+   :param: value
+   :param: error
+
+
+   .. py:attribute:: value
+      :type:  Value
+
+
+   .. py:attribute:: error
+      :type:  Error
+
+
+   .. py:method:: __post_init__() -> None
+
+
+   .. py:method:: success(value: Value) -> Self
+      :classmethod:
+
+
+      The success result factory method.
+
+      :param value: ...
+      :returns: ...
+
+
+
+   .. py:method:: failure(error: Error) -> Self
+      :classmethod:
+
+
+      The failure result factory method.
+
+      :param error: ...
+      :returns: ...
+
+
+
+   .. py:method:: __bool__() -> bool
+
+
+.. py:class:: Success(value: Value)
+
+   Bases: :py:obj:`Result`\ [\ :py:obj:`Value`\ , :py:obj:`Error`\ ]
+
+
+   :param: value
+   :param: error
+
+
+   .. py:method:: __post_init__() -> None
+
+
+.. py:class:: Failure(error: Error)
+
+   Bases: :py:obj:`Result`\ [\ :py:obj:`Value`\ , :py:obj:`Error`\ ]
+
+
+   :param: value
+   :param: error
+
+
+   .. py:method:: __post_init__() -> None
+
+
+.. py:data:: s
+

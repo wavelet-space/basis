@@ -1,0 +1,56 @@
+basis.aggregate
+===============
+
+.. py:module:: basis.aggregate
+
+.. autoapi-nested-parse::
+
+   The abstract classes to implements a _Repository pattern_.
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   basis.aggregate.Entity
+
+
+Package Contents
+----------------
+
+.. py:class:: Entity(identifier: Identifier)
+
+   An entity object in the terms of domain-driven design.
+
+   :tparam: A domain entity identifier type.
+   :param identifier: The entity's identifier unique accros aggregate.
+
+
+   .. py:property:: identifier
+      :type: Identifier
+
+
+
+   .. py:method:: __eq__(that: object) -> bool
+
+      Return self==value.
+
+
+
+   .. py:method:: __hash__() -> int
+
+      Return hash(self).
+
+
+
+   .. py:method:: __str__() -> str
+
+      Return str(self).
+
+
+
+   .. py:attribute:: __repr__
+
+

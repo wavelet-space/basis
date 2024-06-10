@@ -1,0 +1,36 @@
+actor
+=====
+
+.. py:module:: actor
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   actor.Actor
+
+
+Module Contents
+---------------
+
+.. py:class:: Actor
+
+   Bases: :py:obj:`abc.ABC`
+
+
+   The actor  is an callable object with additioanal information
+   which is better to encapsulate to class instead of function.
+
+
+   .. py:method:: __call__(*args, **kwargs)
+      :abstractmethod:
+
+      :async:
+
+
+      The asynchronous method.
+
+
+

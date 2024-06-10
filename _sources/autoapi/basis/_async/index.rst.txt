@@ -1,0 +1,32 @@
+basis._async
+============
+
+.. py:module:: basis._async
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   basis._async.P
+   basis._async.R
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   basis._async.to_async
+
+
+Module Contents
+---------------
+
+.. py:data:: P
+
+.. py:data:: R
+
+.. py:function:: to_async(func: collections.abc.Callable[P, R]) -> collections.abc.Callable[P, collections.abc.Awaitable[R]]
+

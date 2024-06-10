@@ -1,0 +1,40 @@
+basis.utilities.datetime
+========================
+
+.. py:module:: basis.utilities.datetime
+
+.. autoapi-nested-parse::
+
+   This module contains date and time related functions.
+
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   basis.utilities.datetime.timestamp_to_date
+   basis.utilities.datetime.parse_date_cs
+
+
+Module Contents
+---------------
+
+.. py:function:: timestamp_to_date(timestamp: float) -> str
+
+   :param timestamp: A POSIX timestamp like `time.time()`.
+   :returns: An ISO 8601 formated date string.
+
+
+.. py:function:: parse_date_cs(text: str) -> datetime.datetime.date
+
+   Parse a Czech date string to :class:`datetime.date` type.
+
+   The name of month must be a valid Czech month name
+   Any case is allowed e.g. 'prosince', 'Prosince', 'PROSINEC' etc.
+
+   :parse text: A date string e.g.  '1. prosinec 2023'.
+   :returns: A date type e.g. '(2023, 12, 1)'.
+
+

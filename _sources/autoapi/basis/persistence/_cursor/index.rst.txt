@@ -1,0 +1,63 @@
+basis.persistence._cursor
+=========================
+
+.. py:module:: basis.persistence._cursor
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   basis.persistence._cursor.Cursor
+   basis.persistence._cursor.CursorExtended
+
+
+Module Contents
+---------------
+
+.. py:class:: Cursor
+
+   Bases: :py:obj:`Protocol`
+
+
+   A connection cursor object protocol as defined in PEP 249 <https://peps.python.org/pep-0249/>_.
+
+
+   .. py:property:: description
+      :type: tuple
+
+      :abstractmethod:
+
+
+
+   .. py:property:: rowcount
+      :type: int
+
+      :abstractmethod:
+
+
+
+   .. py:method:: execute(query, data=None) -> None
+
+
+   .. py:method:: executemany(query, data=None) -> None
+
+
+   .. py:method:: fetchone() -> tuple
+
+
+   .. py:method:: fetchall() -> list[tuple]
+
+
+   .. py:method:: fetchmany(size: Any) -> list[tuple]
+
+
+.. py:class:: CursorExtended
+
+   Bases: :py:obj:`Cursor`
+
+
+   A connection cursor object protocol with optional features.
+
+

@@ -1,0 +1,485 @@
+basis.persistence
+=================
+
+.. py:module:: basis.persistence
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/basis/persistence/_connection/index
+   /autoapi/basis/persistence/_connector/index
+   /autoapi/basis/persistence/_cursor/index
+   /autoapi/basis/persistence/_examplerepo/index
+   /autoapi/basis/persistence/_repository/index
+   /autoapi/basis/persistence/_transaction/index
+
+
+Exceptions
+----------
+
+.. autoapisummary::
+
+   basis.persistence.ConflictError
+   basis.persistence.PersistenceError
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   basis.persistence.Connection
+   basis.persistence.Cursor
+   basis.persistence.CursorExtended
+   basis.persistence.MemoryRepository
+   basis.persistence.AbstractRepository
+   basis.persistence.AbstractSQLRepository
+   basis.persistence.RestRepository
+
+
+Package Contents
+----------------
+
+.. py:class:: Connection
+
+   Bases: :py:obj:`Protocol`
+
+
+   A database connection object as defined in PEP 249 <https://peps.python.org/pep-0249/>_.
+
+   .. seealso::
+
+       The `connection object <https://peps.python.org/pep-0249/#connection-objects>`_
+
+
+
+   .. py:attribute:: autocommit
+      :type:  bool
+
+
+   .. py:method:: close() -> None
+
+
+   .. py:method:: commit() -> None
+
+
+   .. py:method:: rollback() -> None
+
+
+   .. py:method:: cursor() -> basis.persistence._cursor.Cursor
+
+
+.. py:class:: Cursor
+
+   Bases: :py:obj:`Protocol`
+
+
+   A connection cursor object protocol as defined in PEP 249 <https://peps.python.org/pep-0249/>_.
+
+
+   .. py:property:: description
+      :type: tuple
+
+      :abstractmethod:
+
+
+
+   .. py:property:: rowcount
+      :type: int
+
+      :abstractmethod:
+
+
+
+   .. py:method:: execute(query, data=None) -> None
+
+
+   .. py:method:: executemany(query, data=None) -> None
+
+
+   .. py:method:: fetchone() -> tuple
+
+
+   .. py:method:: fetchall() -> list[tuple]
+
+
+   .. py:method:: fetchmany(size: Any) -> list[tuple]
+
+
+.. py:class:: CursorExtended
+
+   Bases: :py:obj:`Cursor`
+
+
+   A connection cursor object protocol with optional features.
+
+
+.. py:class:: MemoryRepository(entities: Iterable[Entity] = None, identity_function: Callable = None)
+
+   Bases: :py:obj:`RepositoryProtocol`
+
+
+   The repository storing entities in the computer's memory.
+
+   Examples:
+
+       ...
+
+
+   .. py:attribute:: _storage
+      :type:  dict[MemoryRepository.Identifier, MemoryRepository.Entity]
+
+
+   .. py:attribute:: _current
+      :type:  list[MemoryRepository.Entity]
+
+
+   .. py:method:: save(entity: Entity) -> Identifier
+
+      Save the entity to the storage.
+
+      :param entity: Entity to save.
+      :raises: ConflictError
+
+
+
+   .. py:method:: find(entity_id: Identifier) -> Entity | None
+
+      Find the entity in the storage.
+
+
+
+   .. py:method:: count() -> int
+
+      Count the persisted entities.
+
+
+
+   .. py:method:: exists(entity: Entity) -> bool
+
+      Check if the entity is alrady persisted.
+
+      :param: ...
+
+
+
+   .. py:method:: commit() -> None
+
+      Commit changes.
+
+      :raises: ...
+
+
+
+   .. py:method:: revert() -> None
+
+      Revert (abort) changes.
+
+      :raises: ...
+
+
+
+.. py:class:: AbstractRepository
+
+   Bases: :py:obj:`Protocol`
+
+
+   Base class for protocol classes.
+
+   Protocol classes are defined as::
+
+       class Proto(Protocol):
+           def meth(self) -> int:
+               ...
+
+   Such classes are primarily used with static type checkers that recognize
+   structural subtyping (static duck-typing).
+
+   For example::
+
+       class C:
+           def meth(self) -> int:
+               return 0
+
+       def func(x: Proto) -> int:
+           return x.meth()
+
+       func(C())  # Passes static type check
+
+   See PEP 544 for details. Protocol classes decorated with
+   @typing.runtime_checkable act as simple-minded runtime protocols that check
+   only the presence of given attributes, ignoring their type signatures.
+   Protocol classes can be generic, they are defined as::
+
+       class GenProto[T](Protocol):
+           def meth(self) -> T:
+               ...
+
+
+   .. py:attribute:: _identity_function
+      :type:  Callable
+      :value: None
+
+
+
+   .. py:method:: _get_identifier(entity: Entity) -> Identifier
+
+
+   .. py:method:: save(entity: Entity) -> Identifier
+
+      Save the entity to the storage.
+
+      :param entity: Entity to save.
+      :raises: ConflictError
+
+
+
+   .. py:method:: find(entity_id: Identifier) -> Entity
+
+      Find the entity in the storage.
+
+
+
+   .. py:method:: count() -> int
+
+      Count the persisted entities.
+
+
+
+   .. py:method:: exists(entity: Entity) -> bool
+
+      Check if the entity is alrady persisted.
+
+      :param: ...
+
+
+
+   .. py:method:: commit() -> None
+
+      Commit changes.
+
+      :raises: ...
+
+
+
+   .. py:method:: revert() -> None
+
+      Revert (abort) changes.
+
+      :raises: ...
+
+
+
+   .. py:method:: __enter__() -> Self
+
+
+   .. py:method:: __exit__(error_type, error_value, traceback) -> None
+
+
+.. py:exception:: ConflictError(message, *errors)
+
+   Bases: :py:obj:`PersistenceError`
+
+
+   Raised when entity can't be stored due some conflicts.
+
+
+.. py:exception:: PersistenceError(message, *errors)
+
+   Bases: :py:obj:`Exception`
+
+
+   Common base class for all non-exit exceptions.
+
+
+.. py:class:: AbstractSQLRepository(context: basis.persistence._connection.Connection, identity_function: Callable = None)
+
+   Bases: :py:obj:`RepositoryProtocol`
+
+
+   Base class for protocol classes.
+
+   Protocol classes are defined as::
+
+       class Proto(Protocol):
+           def meth(self) -> int:
+               ...
+
+   Such classes are primarily used with static type checkers that recognize
+   structural subtyping (static duck-typing).
+
+   For example::
+
+       class C:
+           def meth(self) -> int:
+               return 0
+
+       def func(x: Proto) -> int:
+           return x.meth()
+
+       func(C())  # Passes static type check
+
+   See PEP 544 for details. Protocol classes decorated with
+   @typing.runtime_checkable act as simple-minded runtime protocols that check
+   only the presence of given attributes, ignoring their type signatures.
+   Protocol classes can be generic, they are defined as::
+
+       class GenProto[T](Protocol):
+           def meth(self) -> T:
+               ...
+
+
+   .. py:attribute:: _context
+      :type:  basis.persistence._connection.Connection
+
+
+   .. py:method:: save(entity: Entity) -> Identifier
+      :abstractmethod:
+
+
+      Save the entity to the storage.
+
+
+
+   .. py:method:: find(entity_id: Identifier) -> Entity | None
+      :abstractmethod:
+
+
+      Find the entity in the storage.
+
+
+
+   .. py:method:: count() -> int
+      :abstractmethod:
+
+
+      Count the persisted entities.
+
+
+
+   .. py:method:: exists(entity: Entity) -> bool
+      :abstractmethod:
+
+
+      Check if the entity is alrady persisted.
+
+      :param: ...
+
+
+
+   .. py:method:: commit() -> None
+
+      Commit changes.
+
+      :raises: ...
+
+
+
+   .. py:method:: revert() -> None
+
+      Revert (abort) changes.
+
+      :raises: ...
+
+
+
+.. py:class:: RestRepository(base_url: str, entity_uri: str, **request_args)
+
+   Bases: :py:obj:`RepositoryProtocol`\ [\ :py:obj:`RestRepository.Entity`\ , :py:obj:`RestRepository.Identifier`\ ]
+
+
+   Base class for protocol classes.
+
+   Protocol classes are defined as::
+
+       class Proto(Protocol):
+           def meth(self) -> int:
+               ...
+
+   Such classes are primarily used with static type checkers that recognize
+   structural subtyping (static duck-typing).
+
+   For example::
+
+       class C:
+           def meth(self) -> int:
+               return 0
+
+       def func(x: Proto) -> int:
+           return x.meth()
+
+       func(C())  # Passes static type check
+
+   See PEP 544 for details. Protocol classes decorated with
+   @typing.runtime_checkable act as simple-minded runtime protocols that check
+   only the presence of given attributes, ignoring their type signatures.
+   Protocol classes can be generic, they are defined as::
+
+       class GenProto[T](Protocol):
+           def meth(self) -> T:
+               ...
+
+
+   .. py:method:: _to_data(entity: Entity) -> DataSend
+      :abstractmethod:
+
+
+
+   .. py:method:: _to_entity(data: DataSend) -> Entity
+      :abstractmethod:
+
+
+
+   .. py:method:: save(entity: Entity) -> Identifier
+
+      Save the entity to the storage.
+
+      :param entity: Entity to save.
+      :raises: ConflictError
+
+
+
+   .. py:method:: find(entity_id: Identifier) -> Entity
+
+      Find the entity in the storage.
+
+
+
+   .. py:method:: count() -> int
+      :abstractmethod:
+
+
+      Count the persisted entities.
+
+
+
+   .. py:method:: exists(entity: Entity) -> bool
+
+      Check if the entity is alrady persisted.
+
+      :param: ...
+
+
+
+   .. py:method:: commit() -> None
+
+      Commit changes.
+
+      :raises: ...
+
+
+
+   .. py:method:: revert() -> None
+      :abstractmethod:
+
+
+      Revert (abort) changes.
+
+      :raises: ...
+
+
+

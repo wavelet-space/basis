@@ -1,0 +1,381 @@
+basis.environment
+=================
+
+.. py:module:: basis.environment
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   basis.environment.logger
+   basis.environment._newline
+   basis.environment._multiline_whitespace
+   basis.environment._whitespace
+   basis.environment._export
+   basis.environment._single_quoted_key
+   basis.environment._unquoted_key
+   basis.environment._equal_sign
+   basis.environment._single_quoted_value
+   basis.environment._double_quoted_value
+   basis.environment._unquoted_value
+   basis.environment._comment
+   basis.environment._end_of_line
+   basis.environment._rest_of_line
+   basis.environment._double_quote_escapes
+   basis.environment._single_quote_escapes
+   basis.environment._posix_variable
+   basis.environment.StrPath
+   basis.environment.loaded
+
+
+Exceptions
+----------
+
+.. autoapisummary::
+
+   basis.environment.Error
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   basis.environment.Original
+   basis.environment.Binding
+   basis.environment.Position
+   basis.environment.Reader
+   basis.environment.Atom
+   basis.environment.Literal
+   basis.environment.Variable
+   basis.environment.DotEnv
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   basis.environment.make_regex
+   basis.environment.decode_escapes
+   basis.environment.parse_key
+   basis.environment.parse_unquoted_value
+   basis.environment.parse_value
+   basis.environment.parse_binding
+   basis.environment.parse_stream
+   basis.environment.parse_variables
+   basis.environment.with_warn_for_invalid_lines
+   basis.environment.get_key
+   basis.environment.rewrite
+   basis.environment.set_key
+   basis.environment.unset_key
+   basis.environment.resolve_variables
+   basis.environment._walk_to_root
+   basis.environment.find_dotenv
+   basis.environment.load_dotenv
+   basis.environment.dotenv_values
+
+
+Module Contents
+---------------
+
+.. py:data:: logger
+
+.. py:function:: make_regex(string: str, extra_flags: int = 0) -> Pattern[str]
+
+.. py:data:: _newline
+
+.. py:data:: _multiline_whitespace
+
+.. py:data:: _whitespace
+
+.. py:data:: _export
+
+.. py:data:: _single_quoted_key
+
+.. py:data:: _unquoted_key
+
+.. py:data:: _equal_sign
+
+.. py:data:: _single_quoted_value
+
+.. py:data:: _double_quoted_value
+
+.. py:data:: _unquoted_value
+
+.. py:data:: _comment
+
+.. py:data:: _end_of_line
+
+.. py:data:: _rest_of_line
+
+.. py:data:: _double_quote_escapes
+
+.. py:data:: _single_quote_escapes
+
+.. py:class:: Original
+
+   .. py:attribute:: line
+      :type:  int
+
+
+   .. py:attribute:: string
+      :type:  str
+
+
+.. py:class:: Binding
+
+   .. py:attribute:: key
+      :type:  Optional[str]
+
+
+   .. py:attribute:: value
+      :type:  Optional[str]
+
+
+   .. py:attribute:: error
+      :type:  bool
+
+
+   .. py:attribute:: original
+      :type:  Original
+
+
+.. py:class:: Position(chars: int, line: int)
+
+   .. py:method:: start() -> Position
+      :classmethod:
+
+
+
+   .. py:method:: set(other: Position) -> None
+
+
+   .. py:method:: advance(string: str) -> None
+
+
+.. py:exception:: Error
+
+   Bases: :py:obj:`Exception`
+
+
+   Common base class for all non-exit exceptions.
+
+
+.. py:class:: Reader(stream: IO[str])
+
+   .. py:method:: has_next() -> bool
+
+
+   .. py:method:: set_mark() -> None
+
+
+   .. py:method:: get_marked() -> Original
+
+
+   .. py:method:: peek(count: int) -> str
+
+
+   .. py:method:: read(count: int) -> str
+
+
+   .. py:method:: read_regex(regex: Pattern[str]) -> Sequence[str]
+
+
+.. py:function:: decode_escapes(regex: Pattern[str], string: str) -> str
+
+.. py:function:: parse_key(reader: Reader) -> Optional[str]
+
+.. py:function:: parse_unquoted_value(reader: Reader) -> str
+
+.. py:function:: parse_value(reader: Reader) -> str
+
+.. py:function:: parse_binding(reader: Reader) -> Binding
+
+.. py:function:: parse_stream(stream: IO[str]) -> Iterator[Binding]
+
+.. py:data:: _posix_variable
+   :type:  Pattern[str]
+
+.. py:class:: Atom
+
+   .. py:method:: __ne__(other: object) -> bool
+
+      Return self!=value.
+
+
+
+   .. py:method:: resolve(env: Mapping[str, Optional[str]]) -> str
+      :abstractmethod:
+
+
+
+.. py:class:: Literal(value: str)
+
+   Bases: :py:obj:`Atom`
+
+
+   .. py:method:: __repr__() -> str
+
+      Return repr(self).
+
+
+
+   .. py:method:: __eq__(other: object) -> bool
+
+      Return self==value.
+
+
+
+   .. py:method:: __hash__() -> int
+
+      Return hash(self).
+
+
+
+   .. py:method:: resolve(env: Mapping[str, Optional[str]]) -> str
+
+
+.. py:class:: Variable(name: str, default: Optional[str])
+
+   Bases: :py:obj:`Atom`
+
+
+   .. py:method:: __repr__() -> str
+
+      Return repr(self).
+
+
+
+   .. py:method:: __eq__(other: object) -> bool
+
+      Return self==value.
+
+
+
+   .. py:method:: __hash__() -> int
+
+      Return hash(self).
+
+
+
+   .. py:method:: resolve(env: Mapping[str, Optional[str]]) -> str
+
+
+.. py:function:: parse_variables(value: str) -> Iterator[Atom]
+
+.. py:data:: StrPath
+
+.. py:function:: with_warn_for_invalid_lines(mappings: Iterator[Binding]) -> Iterator[Binding]
+
+.. py:class:: DotEnv(dotenv_path: Optional[StrPath], stream: Optional[IO[str]] = None, verbose: bool = False, encoding: Optional[str] = None, interpolate: bool = True, override: bool = True)
+
+   .. py:method:: _get_stream() -> Iterator[IO[str]]
+
+
+   .. py:method:: dict() -> Dict[str, Optional[str]]
+
+      Return dotenv as dict
+
+
+
+   .. py:method:: parse() -> Iterator[Tuple[str, Optional[str]]]
+
+
+   .. py:method:: set_as_environment_variables() -> bool
+
+      Load the current dotenv as system environment variable.
+
+
+
+   .. py:method:: get(key: str) -> Optional[str]
+
+
+.. py:function:: get_key(dotenv_path: StrPath, key_to_get: str, encoding: Optional[str] = 'utf-8') -> Optional[str]
+
+   Get the value of a given key from the given .env.
+
+   Returns `None` if the key isn't found or doesn't have a value.
+
+
+.. py:function:: rewrite(path: StrPath, encoding: Optional[str]) -> Iterator[Tuple[IO[str], IO[str]]]
+
+.. py:function:: set_key(dotenv_path: StrPath, key_to_set: str, value_to_set: str, quote_mode: str = 'always', export: bool = False, encoding: Optional[str] = 'utf-8') -> Tuple[Optional[bool], str, str]
+
+   Adds or Updates a key/value to the given .env
+
+   If the .env path given doesn't exist, fails instead of risking creating
+   an orphan .env somewhere in the filesystem
+
+
+.. py:function:: unset_key(dotenv_path: StrPath, key_to_unset: str, encoding: Optional[str] = 'utf-8') -> Tuple[Optional[bool], str]
+
+   Removes a given key from the given `.env` file.
+
+   If the .env path given doesn't exist, fails.
+   If the given key doesn't exist in the .env, fails.
+
+
+.. py:function:: resolve_variables(values: Iterable[Tuple[str, Optional[str]]], override: bool) -> Mapping[str, Optional[str]]
+
+.. py:function:: _walk_to_root(path: str) -> Iterator[str]
+
+   Yield directories starting from the given directory up to the root
+
+
+.. py:function:: find_dotenv(filename: str = '.env', raise_error_if_not_found: bool = False, usecwd: bool = False) -> str | None
+
+   Search in increasingly higher folders for the given file
+
+   Returns path to the file if found, or an empty string otherwise
+
+
+.. py:function:: load_dotenv(dotenv_path: Optional[StrPath] = None, stream: Optional[IO[str]] = None, verbose: bool = False, override: bool = False, interpolate: bool = True, encoding: Optional[str] = 'utf-8') -> bool
+
+   Parse a .env file and then load all the variables found as environment variables.
+
+   :param dotenv_path: 
+       Absolute or relative path to .env file.
+   :param stream: 
+       Text stream (such as `io.StringIO`) with .env content, used if `dotenv_path` is `None`.
+   :param verbose: 
+       Whether to output a warning the .env file is missing.
+   :param override: 
+       Whether to override the system environment variables with the variables from the `.env` file.
+   :param encoding: 
+       Encoding to be used to read the file.    
+   :returns:
+       Bool: True if at least one environment variable is set else False
+
+   If both `dotenv_path` and `stream` are `None`, `find_dotenv()` is used to find the
+   .env file with it's default parameters. If you need to change the default parameters
+   of `find_dotenv()`, you can explicitly call `find_dotenv()` and pass the result
+   to this function as `dotenv_path`.
+
+
+.. py:function:: dotenv_values(dotenv_path: Optional[StrPath] = None, stream: Optional[IO[str]] = None, verbose: bool = False, interpolate: bool = True, encoding: Optional[str] = 'utf-8') -> Dict[str, Optional[str]]
+
+   Parse a .env file and return its content as a dict.
+
+   The returned dict will have `None` values for keys without values in the .env file.
+   For example, `foo=bar` results in `{"foo": "bar"}` whereas `foo` alone results in
+   `{"foo": None}`
+
+   Parameters:
+   :param dotenv_path: 
+       Absolute or relative path to the .env file.
+   :param stream: 
+       `StringIO` object with .env content, used if `dotenv_path` is `None`.
+   :param verbose: 
+       Whether to output a warning if the .env file is missing.
+   :param encoding: 
+       Encoding to be used to read the file.
+
+   If both `dotenv_path` and `stream` are `None`, `find_dotenv()` is used to find the
+   .env file.
+
+
+.. py:data:: loaded
+

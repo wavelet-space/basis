@@ -1,0 +1,51 @@
+basis.monads_test
+=================
+
+.. py:module:: basis.monads_test
+
+.. autoapi-nested-parse::
+
+   Test not only assert the correct behaviour but also serves as examples.
+
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   basis.monads_test.test_that_success_result_contains_value
+   basis.monads_test.test_that_failure_result_contains_error_message
+   basis.monads_test.test_that_failure_result_contains_exception_class
+   basis.monads_test.test_that_failure_result_contains_exception_classes
+   basis.monads_test.test_pattern_matching_on_success_result
+   basis.monads_test.test_pattern_matching_on_failure_result
+   basis.monads_test.test_result_functor_map
+
+
+Module Contents
+---------------
+
+.. py:function:: test_that_success_result_contains_value()
+
+.. py:function:: test_that_failure_result_contains_error_message()
+
+   Sometimes a simple text can be suficient..
+
+
+.. py:function:: test_that_failure_result_contains_exception_class()
+
+   Test that we can catch single exceptions.
+
+
+.. py:function:: test_that_failure_result_contains_exception_classes()
+
+   Test that we can catch multiple exceptions.
+
+
+.. py:function:: test_pattern_matching_on_success_result()
+
+.. py:function:: test_pattern_matching_on_failure_result()
+
+.. py:function:: test_result_functor_map()
+

@@ -1,0 +1,444 @@
+basis.persistence._repository
+=============================
+
+.. py:module:: basis.persistence._repository
+
+.. autoapi-nested-parse::
+
+   Modul obsahuje třídy abstrahující ukládání a načítání entit do/z úložiště (návrhový vzor repository).
+
+
+
+Exceptions
+----------
+
+.. autoapisummary::
+
+   basis.persistence._repository.PersistenceError
+   basis.persistence._repository.ConflictError
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   basis.persistence._repository.Connection
+   basis.persistence._repository.RepositoryProtocol
+   basis.persistence._repository.AbstractSQLRepository
+   basis.persistence._repository.MemoryRepository
+   basis.persistence._repository.Requester
+   basis.persistence._repository.RestRepository
+
+
+Module Contents
+---------------
+
+.. py:class:: Connection
+
+   Bases: :py:obj:`Protocol`
+
+
+   A database connection object as defined in PEP 249 <https://peps.python.org/pep-0249/>_.
+
+   .. seealso::
+
+       The `connection object <https://peps.python.org/pep-0249/#connection-objects>`_
+
+
+
+   .. py:attribute:: autocommit
+      :type:  bool
+
+
+   .. py:method:: close() -> None
+
+
+   .. py:method:: commit() -> None
+
+
+   .. py:method:: rollback() -> None
+
+
+   .. py:method:: cursor() -> basis.persistence._cursor.Cursor
+
+
+.. py:exception:: PersistenceError(message, *errors)
+
+   Bases: :py:obj:`Exception`
+
+
+   Common base class for all non-exit exceptions.
+
+
+.. py:exception:: ConflictError(message, *errors)
+
+   Bases: :py:obj:`PersistenceError`
+
+
+   Raised when entity can't be stored due some conflicts.
+
+
+.. py:class:: RepositoryProtocol
+
+   Bases: :py:obj:`Protocol`
+
+
+   Base class for protocol classes.
+
+   Protocol classes are defined as::
+
+       class Proto(Protocol):
+           def meth(self) -> int:
+               ...
+
+   Such classes are primarily used with static type checkers that recognize
+   structural subtyping (static duck-typing).
+
+   For example::
+
+       class C:
+           def meth(self) -> int:
+               return 0
+
+       def func(x: Proto) -> int:
+           return x.meth()
+
+       func(C())  # Passes static type check
+
+   See PEP 544 for details. Protocol classes decorated with
+   @typing.runtime_checkable act as simple-minded runtime protocols that check
+   only the presence of given attributes, ignoring their type signatures.
+   Protocol classes can be generic, they are defined as::
+
+       class GenProto[T](Protocol):
+           def meth(self) -> T:
+               ...
+
+
+   .. py:attribute:: _identity_function
+      :type:  Callable
+      :value: None
+
+
+
+   .. py:method:: _get_identifier(entity: Entity) -> Identifier
+
+
+   .. py:method:: save(entity: Entity) -> Identifier
+
+      Save the entity to the storage.
+
+      :param entity: Entity to save.
+      :raises: ConflictError
+
+
+
+   .. py:method:: find(entity_id: Identifier) -> Entity
+
+      Find the entity in the storage.
+
+
+
+   .. py:method:: count() -> int
+
+      Count the persisted entities.
+
+
+
+   .. py:method:: exists(entity: Entity) -> bool
+
+      Check if the entity is alrady persisted.
+
+      :param: ...
+
+
+
+   .. py:method:: commit() -> None
+
+      Commit changes.
+
+      :raises: ...
+
+
+
+   .. py:method:: revert() -> None
+
+      Revert (abort) changes.
+
+      :raises: ...
+
+
+
+   .. py:method:: __enter__() -> Self
+
+
+   .. py:method:: __exit__(error_type, error_value, traceback) -> None
+
+
+.. py:class:: AbstractSQLRepository(context: basis.persistence._connection.Connection, identity_function: Callable = None)
+
+   Bases: :py:obj:`RepositoryProtocol`
+
+
+   Base class for protocol classes.
+
+   Protocol classes are defined as::
+
+       class Proto(Protocol):
+           def meth(self) -> int:
+               ...
+
+   Such classes are primarily used with static type checkers that recognize
+   structural subtyping (static duck-typing).
+
+   For example::
+
+       class C:
+           def meth(self) -> int:
+               return 0
+
+       def func(x: Proto) -> int:
+           return x.meth()
+
+       func(C())  # Passes static type check
+
+   See PEP 544 for details. Protocol classes decorated with
+   @typing.runtime_checkable act as simple-minded runtime protocols that check
+   only the presence of given attributes, ignoring their type signatures.
+   Protocol classes can be generic, they are defined as::
+
+       class GenProto[T](Protocol):
+           def meth(self) -> T:
+               ...
+
+
+   .. py:attribute:: _context
+      :type:  basis.persistence._connection.Connection
+
+
+   .. py:method:: save(entity: Entity) -> Identifier
+      :abstractmethod:
+
+
+      Save the entity to the storage.
+
+
+
+   .. py:method:: find(entity_id: Identifier) -> Entity | None
+      :abstractmethod:
+
+
+      Find the entity in the storage.
+
+
+
+   .. py:method:: count() -> int
+      :abstractmethod:
+
+
+      Count the persisted entities.
+
+
+
+   .. py:method:: exists(entity: Entity) -> bool
+      :abstractmethod:
+
+
+      Check if the entity is alrady persisted.
+
+      :param: ...
+
+
+
+   .. py:method:: commit() -> None
+
+      Commit changes.
+
+      :raises: ...
+
+
+
+   .. py:method:: revert() -> None
+
+      Revert (abort) changes.
+
+      :raises: ...
+
+
+
+.. py:class:: MemoryRepository(entities: Iterable[Entity] = None, identity_function: Callable = None)
+
+   Bases: :py:obj:`RepositoryProtocol`
+
+
+   The repository storing entities in the computer's memory.
+
+   Examples:
+
+       ...
+
+
+   .. py:attribute:: _storage
+      :type:  dict[MemoryRepository.Identifier, MemoryRepository.Entity]
+
+
+   .. py:attribute:: _current
+      :type:  list[MemoryRepository.Entity]
+
+
+   .. py:method:: save(entity: Entity) -> Identifier
+
+      Save the entity to the storage.
+
+      :param entity: Entity to save.
+      :raises: ConflictError
+
+
+
+   .. py:method:: find(entity_id: Identifier) -> Entity | None
+
+      Find the entity in the storage.
+
+
+
+   .. py:method:: count() -> int
+
+      Count the persisted entities.
+
+
+
+   .. py:method:: exists(entity: Entity) -> bool
+
+      Check if the entity is alrady persisted.
+
+      :param: ...
+
+
+
+   .. py:method:: commit() -> None
+
+      Commit changes.
+
+      :raises: ...
+
+
+
+   .. py:method:: revert() -> None
+
+      Revert (abort) changes.
+
+      :raises: ...
+
+
+
+.. py:class:: Requester(**request_args: dict)
+
+   .. py:method:: get(url)
+
+
+   .. py:method:: put(url, data)
+
+
+   .. py:method:: post(url, data)
+
+
+   .. py:method:: delete(url)
+
+
+.. py:class:: RestRepository(base_url: str, entity_uri: str, **request_args)
+
+   Bases: :py:obj:`RepositoryProtocol`\ [\ :py:obj:`RestRepository.Entity`\ , :py:obj:`RestRepository.Identifier`\ ]
+
+
+   Base class for protocol classes.
+
+   Protocol classes are defined as::
+
+       class Proto(Protocol):
+           def meth(self) -> int:
+               ...
+
+   Such classes are primarily used with static type checkers that recognize
+   structural subtyping (static duck-typing).
+
+   For example::
+
+       class C:
+           def meth(self) -> int:
+               return 0
+
+       def func(x: Proto) -> int:
+           return x.meth()
+
+       func(C())  # Passes static type check
+
+   See PEP 544 for details. Protocol classes decorated with
+   @typing.runtime_checkable act as simple-minded runtime protocols that check
+   only the presence of given attributes, ignoring their type signatures.
+   Protocol classes can be generic, they are defined as::
+
+       class GenProto[T](Protocol):
+           def meth(self) -> T:
+               ...
+
+
+   .. py:method:: _to_data(entity: Entity) -> DataSend
+      :abstractmethod:
+
+
+
+   .. py:method:: _to_entity(data: DataSend) -> Entity
+      :abstractmethod:
+
+
+
+   .. py:method:: save(entity: Entity) -> Identifier
+
+      Save the entity to the storage.
+
+      :param entity: Entity to save.
+      :raises: ConflictError
+
+
+
+   .. py:method:: find(entity_id: Identifier) -> Entity
+
+      Find the entity in the storage.
+
+
+
+   .. py:method:: count() -> int
+      :abstractmethod:
+
+
+      Count the persisted entities.
+
+
+
+   .. py:method:: exists(entity: Entity) -> bool
+
+      Check if the entity is alrady persisted.
+
+      :param: ...
+
+
+
+   .. py:method:: commit() -> None
+
+      Commit changes.
+
+      :raises: ...
+
+
+
+   .. py:method:: revert() -> None
+      :abstractmethod:
+
+
+      Revert (abort) changes.
+
+      :raises: ...
+
+
+

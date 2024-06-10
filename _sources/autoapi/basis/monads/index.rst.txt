@@ -1,0 +1,261 @@
+basis.monads
+============
+
+.. py:module:: basis.monads
+
+.. autoapi-nested-parse::
+
+   Simple monadic architecture for Python.
+   Monads and Monadic Pipelines in Python.
+
+   Some notes inspired by Haskell documentation:
+
+   Monad is a triple M := (m, return, >>=) where
+
+   - m is a type constructor
+   - return is a function `return :: a -> m a`
+   - >>= is an operator called bind `>>= :: m a -> (a -> m b) -> m b`
+
+   Features
+   - Functor (Mappable)
+   - Applicative (Flatten + Mappable)
+
+   Monad types
+   - Option aka Maybe
+   - Result aka Either
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   basis.monads.T
+   basis.monads.U
+   basis.monads.Function1
+   basis.monads.a
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   basis.monads.Functor
+   basis.monads.Applicative
+   basis.monads.Monadic
+   basis.monads.Monad
+   basis.monads.Option
+   basis.monads.Nothing
+   basis.monads.Something
+   basis.monads.Result
+   basis.monads.Success
+   basis.monads.Failure
+
+
+Module Contents
+---------------
+
+.. py:data:: T
+
+.. py:data:: U
+
+.. py:data:: Function1
+   :type:  TypeAlias
+   :value: Callable[[T], U]
+
+
+.. py:class:: Functor
+
+   Bases: :py:obj:`Protocol`\ [\ :py:obj:`T`\ , :py:obj:`U`\ ]
+
+
+   The functor is used for values that can be mapped over.
+
+
+   .. py:method:: map(callable: Callable[[T], U]) -> U
+
+      Map a function over the wrapped value.
+
+
+
+.. py:class:: Applicative
+
+   Bases: :py:obj:`Functor`\ [\ :py:obj:`T`\ , :py:obj:`U`\ ]
+
+
+   The applicative is an extension of functor.
+
+
+
+   .. py:method:: apply(callable: Callable[[T], U]) -> Self
+
+      Jak to funguje:
+      Mějme funktor `F(T)` a funkci `f(T) -> U`. Potom metoda apply 
+      vezme hodnotu z funktoru F a aplikuje na ní funkci f a zabalí ji zpět do funktoru, který vrací.
+
+      Metoda se též nazývaná **`fmap`** s operátorovým aliasem `<*>`.
+
+
+
+.. py:class:: Monadic
+
+   Bases: :py:obj:`Protocol`, :py:obj:`Generic`\ [\ :py:obj:`T`\ ]
+
+
+   Base class for protocol classes.
+
+   Protocol classes are defined as::
+
+       class Proto(Protocol):
+           def meth(self) -> int:
+               ...
+
+   Such classes are primarily used with static type checkers that recognize
+   structural subtyping (static duck-typing).
+
+   For example::
+
+       class C:
+           def meth(self) -> int:
+               return 0
+
+       def func(x: Proto) -> int:
+           return x.meth()
+
+       func(C())  # Passes static type check
+
+   See PEP 544 for details. Protocol classes decorated with
+   @typing.runtime_checkable act as simple-minded runtime protocols that check
+   only the presence of given attributes, ignoring their type signatures.
+   Protocol classes can be generic, they are defined as::
+
+       class GenProto[T](Protocol):
+           def meth(self) -> T:
+               ...
+
+
+   .. py:property:: value
+      :type: T
+
+      Get the wrapped value.
+
+
+
+   .. py:method:: bind(callable: Callable) -> Self
+
+      Apply function to the value.
+
+
+
+   .. py:method:: __shift__(callable: Callable) -> Self
+
+
+.. py:class:: Monad
+
+   Bases: :py:obj:`Generic`\ [\ :py:obj:`T`\ , :py:obj:`U`\ ]
+
+
+   .. py:attribute:: value
+      :type:  T
+
+
+   .. py:method:: bind(callable: Function1) -> Self
+
+      Apply monadic function to the value.
+
+
+
+   .. py:method:: __call__(callable: Function1) -> Self
+
+
+   .. py:method:: __or__(some: Self | Callable) -> Self
+
+      A :py:meth:`bind` method operator alias.
+
+
+
+   .. py:method:: __shift__(some: Self | Callable) -> Self
+
+      A :py:meth:`bind` method operator alias.
+
+
+
+   .. py:method:: __ror__(some: Self | Callable) -> Self
+
+
+.. py:class:: Option
+
+   Bases: :py:obj:`Generic`\ [\ :py:obj:`T`\ , :py:obj:`U`\ ]
+
+
+   This monad, also called Maybe, is used for possibly missing values.
+
+
+.. py:class:: Nothing
+
+   Bases: :py:obj:`Option`\ [\ :py:obj:`T`\ , :py:obj:`U`\ ]
+
+
+   This monad, also called Maybe, is used for possibly missing values.
+
+
+.. py:class:: Something
+
+   Bases: :py:obj:`Option`\ [\ :py:obj:`T`\ , :py:obj:`U`\ ]
+
+
+   This monad, also called Maybe, is used for possibly missing values.
+
+
+   .. py:attribute:: value
+      :type:  T
+
+
+.. py:class:: Result
+
+   Bases: :py:obj:`Generic`\ [\ :py:obj:`T`\ , :py:obj:`U`\ ]
+
+
+   This monad, also called Either, wraps a value of operation which can fail.
+
+   The :py:class:`Result` subclasses (variants) are :py:class:`Success` and :py:class:`Failure`.
+
+
+
+   .. py:method:: map(function: Callable[[T], U]) -> U
+
+
+.. py:class:: Success
+
+   Bases: :py:obj:`Result`\ [\ :py:obj:`T`\ , :py:obj:`U`\ ]
+
+
+   This monad, also called Either, wraps a value of operation which can fail.
+
+   The :py:class:`Result` subclasses (variants) are :py:class:`Success` and :py:class:`Failure`.
+
+
+
+   .. py:attribute:: value
+      :type:  T
+
+
+.. py:class:: Failure
+
+   Bases: :py:obj:`Result`\ [\ :py:obj:`T`\ , :py:obj:`U`\ ]
+
+
+   This monad, also called Either, wraps a value of operation which can fail.
+
+   The :py:class:`Result` subclasses (variants) are :py:class:`Success` and :py:class:`Failure`.
+
+
+
+   .. py:attribute:: error
+      :type:  U
+
+
+.. py:data:: a
+

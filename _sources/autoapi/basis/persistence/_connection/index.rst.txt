@@ -1,0 +1,121 @@
+basis.persistence._connection
+=============================
+
+.. py:module:: basis.persistence._connection
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   basis.persistence._connection.Cursor
+   basis.persistence._connection.Connection
+   basis.persistence._connection.Type
+   basis.persistence._connection.AsyncConnector
+
+
+Module Contents
+---------------
+
+.. py:class:: Cursor
+
+   Bases: :py:obj:`Protocol`
+
+
+   A connection cursor object protocol as defined in PEP 249 <https://peps.python.org/pep-0249/>_.
+
+
+   .. py:property:: description
+      :type: tuple
+
+      :abstractmethod:
+
+
+
+   .. py:property:: rowcount
+      :type: int
+
+      :abstractmethod:
+
+
+
+   .. py:method:: execute(query, data=None) -> None
+
+
+   .. py:method:: executemany(query, data=None) -> None
+
+
+   .. py:method:: fetchone() -> tuple
+
+
+   .. py:method:: fetchall() -> list[tuple]
+
+
+   .. py:method:: fetchmany(size: Any) -> list[tuple]
+
+
+.. py:class:: Connection
+
+   Bases: :py:obj:`Protocol`
+
+
+   A database connection object as defined in PEP 249 <https://peps.python.org/pep-0249/>_.
+
+   .. seealso::
+
+       The `connection object <https://peps.python.org/pep-0249/#connection-objects>`_
+
+
+
+   .. py:attribute:: autocommit
+      :type:  bool
+
+
+   .. py:method:: close() -> None
+
+
+   .. py:method:: commit() -> None
+
+
+   .. py:method:: rollback() -> None
+
+
+   .. py:method:: cursor() -> basis.persistence._cursor.Cursor
+
+
+.. py:class:: Type
+
+   A database type.
+
+   .. seealso::
+
+       The `type object <https://www.python.org/dev/peps/pep-0249/#type-objects>`_
+
+
+.. py:class:: AsyncConnector
+
+   .. py:attribute:: autocommit
+      :type:  bool
+
+
+   .. py:method:: close() -> None
+      :async:
+
+
+
+   .. py:method:: commit() -> None
+      :async:
+
+
+
+   .. py:method:: rollback() -> None
+      :async:
+
+
+
+   .. py:method:: cursor() -> basis.persistence._cursor.Cursor
+      :async:
+
+
+

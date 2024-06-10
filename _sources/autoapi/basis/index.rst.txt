@@ -1,0 +1,89 @@
+basis
+=====
+
+.. py:module:: basis
+
+.. autoapi-nested-parse::
+
+   This module contains all the things shared across projects.
+
+
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/basis/aggregate/index
+   /autoapi/basis/persistence/index
+   /autoapi/basis/result/index
+   /autoapi/basis/utilities/index
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/basis/_async/index
+   /autoapi/basis/_project/index
+   /autoapi/basis/environment/index
+   /autoapi/basis/monads/index
+   /autoapi/basis/monads_test/index
+   /autoapi/basis/network/index
+   /autoapi/basis/protocols/index
+   /autoapi/basis/values/index
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   basis.flatten
+   basis.expand
+
+
+Package Contents
+----------------
+
+.. py:function:: flatten(data: str | dict, separator='.')
+
+   Flatten a nested structure such as JSON or dictionary.
+
+   :param data: A hierarchical data e.g array of objects in JSON.
+   :returns: A flattened collection of records.
+
+   .. seealso:: :func:`expand`
+
+   >>> data = [{
+   ...     'a': [1, 2, 3],
+   ...     'b': {
+   ...         'a': 1,
+   ...         'b': 2,
+   ...         'c': {
+   ...             'a': 1,
+   ...             'b': 2
+   ...         }
+   ...     }
+   ... ]}
+   >>> flatten(data)
+   [{'a[0]': 1, 'a[1]': 2, 'a[2]': 3, 'b.a': 1, 'b.b': 2, 'b.c.a': 1, 'b.c.b': 2}]
+   >>> flatten(data, separator="_")
+   [{'a[0]': 1, 'a[1]': 2, 'a[2]': 3, 'b_a': 1, 'b_b': 2, 'b_c_a': 1, 'b_c_b': 2}]
+
+
+.. py:function:: expand(data, separator='.')
+
+   Expand a flattened structure.
+
+   :param data: A flat collection of records.
+   :returns:
+
+   >>> data = [{'a[0]': 1, 'a[1]': 2, 'a[2]': 3, 'b_a': 1, 'b_b': 2, 'b_c_a': 1, 'b_c_b': 2}]
+   >>> expand(data, separator="_")
+   [{'a': [1, 2, 3], 'b': {'a': 1, 'b': 2, 'c': {'a': 1, 'b': 2}}]}
+
+

@@ -1,0 +1,60 @@
+basis.utilities.tuples
+======================
+
+.. py:module:: basis.utilities.tuples
+
+.. autoapi-nested-parse::
+
+   This module contains various n-tuples.
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   basis.utilities.tuples.pair
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   basis.utilities.tuples.Pair
+
+
+Module Contents
+---------------
+
+.. py:class:: Pair(one: T, two: T)
+
+   .. py:property:: first
+      :type: T
+
+
+
+   .. py:property:: second
+      :type: T
+
+
+
+   .. py:method:: __eq__(that) -> bool
+
+      Return self==value.
+
+
+
+   .. py:method:: __hash__() -> int
+
+      Return hash(self).
+
+
+
+   .. py:method:: __copy__(that) -> Pair
+
+
+.. py:data:: pair
+   :type:  Pair[int]
+

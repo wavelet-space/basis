@@ -1,0 +1,18 @@
+basis.utilities
+===============
+
+.. py:module:: basis.utilities
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/basis/utilities/datetime/index
+   /autoapi/basis/utilities/numbers/index
+   /autoapi/basis/utilities/periods/index
+   /autoapi/basis/utilities/tuples/index
+
+

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>basis &mdash; basis  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=fd3f3429" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="basis.aggregate" href="aggregate/index.html" />
+    <link rel="prev" title="API Reference" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            basis
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../result.html">Result</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../persistence.html">Persistence</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">basis</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="aggregate/index.html">basis.aggregate</a></li>
+<li class="toctree-l4"><a class="reference internal" href="persistence/index.html">basis.persistence</a></li>
+<li class="toctree-l4"><a class="reference internal" href="result/index.html">basis.result</a></li>
+<li class="toctree-l4"><a class="reference internal" href="utilities/index.html">basis.utilities</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="_async/index.html">basis._async</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_project/index.html">basis._project</a></li>
+<li class="toctree-l4"><a class="reference internal" href="environment/index.html">basis.environment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="monads/index.html">basis.monads</a></li>
+<li class="toctree-l4"><a class="reference internal" href="monads_test/index.html">basis.monads_test</a></li>
+<li class="toctree-l4"><a class="reference internal" href="network/index.html">basis.network</a></li>
+<li class="toctree-l4"><a class="reference internal" href="protocols/index.html">basis.protocols</a></li>
+<li class="toctree-l4"><a class="reference internal" href="values/index.html">basis.values</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#functions">Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#package-contents">Package Contents</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#basis.flatten"><code class="docutils literal notranslate"><span class="pre">flatten()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#basis.expand"><code class="docutils literal notranslate"><span class="pre">expand()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../actor/index.html">actor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../service/index.html">service</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../message/index.html">message</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">basis</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">API Reference</a></li>
+      <li class="breadcrumb-item active">basis</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/autoapi/basis/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-basis">
+<span id="basis"></span><h1>basis<a class="headerlink" href="#module-basis" title="Link to this heading"></a></h1>
+<p>This module contains all the things shared across projects.</p>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="aggregate/index.html">basis.aggregate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="persistence/index.html">basis.persistence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="result/index.html">basis.result</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utilities/index.html">basis.utilities</a></li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="_async/index.html">basis._async</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_project/index.html">basis._project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="environment/index.html">basis.environment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="monads/index.html">basis.monads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="monads_test/index.html">basis.monads_test</a></li>
+<li class="toctree-l1"><a class="reference internal" href="network/index.html">basis.network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="protocols/index.html">basis.protocols</a></li>
+<li class="toctree-l1"><a class="reference internal" href="values/index.html">basis.values</a></li>
+</ul>
+</div>
+</section>
+<section id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#basis.flatten" title="basis.flatten"><code class="xref py py-obj docutils literal notranslate"><span class="pre">flatten</span></code></a>(data[, separator])</p></td>
+<td><p>Flatten a nested structure such as JSON or dictionary.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#basis.expand" title="basis.expand"><code class="xref py py-obj docutils literal notranslate"><span class="pre">expand</span></code></a>(data[, separator])</p></td>
+<td><p>Expand a flattened structure.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="package-contents">
+<h2>Package Contents<a class="headerlink" href="#package-contents" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="basis.flatten">
+<span class="sig-prename descclassname"><span class="pre">basis.</span></span><span class="sig-name descname"><span class="pre">flatten</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">separator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#basis.flatten" title="Link to this definition"></a></dt>
+<dd><p>Flatten a nested structure such as JSON or dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> – A hierarchical data e.g array of objects in JSON.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A flattened collection of records.</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#basis.expand" title="basis.expand"><code class="xref py py-func docutils literal notranslate"><span class="pre">expand()</span></code></a></p>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">[{</span>
+<span class="gp">... </span>    <span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="p">{</span>
+<span class="gp">... </span>        <span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="p">{</span>
+<span class="gp">... </span>            <span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+<span class="gp">... </span>            <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="mi">2</span>
+<span class="gp">... </span>        <span class="p">}</span>
+<span class="gp">... </span>    <span class="p">}</span>
+<span class="gp">... </span><span class="p">]}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">flatten</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="go">[{&#39;a[0]&#39;: 1, &#39;a[1]&#39;: 2, &#39;a[2]&#39;: 3, &#39;b.a&#39;: 1, &#39;b.b&#39;: 2, &#39;b.c.a&#39;: 1, &#39;b.c.b&#39;: 2}]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">flatten</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">separator</span><span class="o">=</span><span class="s2">&quot;_&quot;</span><span class="p">)</span>
+<span class="go">[{&#39;a[0]&#39;: 1, &#39;a[1]&#39;: 2, &#39;a[2]&#39;: 3, &#39;b_a&#39;: 1, &#39;b_b&#39;: 2, &#39;b_c_a&#39;: 1, &#39;b_c_b&#39;: 2}]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="basis.expand">
+<span class="sig-prename descclassname"><span class="pre">basis.</span></span><span class="sig-name descname"><span class="pre">expand</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">separator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#basis.expand" title="Link to this definition"></a></dt>
+<dd><p>Expand a flattened structure.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> – A flat collection of records.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;a[0]&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;a[1]&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;a[2]&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;b_a&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;b_b&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;b_c_a&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;b_c_b&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">expand</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">separator</span><span class="o">=</span><span class="s2">&quot;_&quot;</span><span class="p">)</span>
+<span class="go">[{&#39;a&#39;: [1, 2, 3], &#39;b&#39;: {&#39;a&#39;: 1, &#39;b&#39;: 2, &#39;c&#39;: {&#39;a&#39;: 1, &#39;b&#39;: 2}}]}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../index.html" class="btn btn-neutral float-left" title="API Reference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="aggregate/index.html" class="btn btn-neutral float-right" title="basis.aggregate" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Wavelet.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

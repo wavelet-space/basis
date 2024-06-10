@@ -1,0 +1,77 @@
+basis.persistence._connector
+============================
+
+.. py:module:: basis.persistence._connector
+
+.. autoapi-nested-parse::
+
+   FIXME
+
+   Should ewe use connection pool?
+   https://stackoverflow.com/questions/11889104/
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   basis.persistence._connector.Connection
+   basis.persistence._connector.Connector
+
+
+Module Contents
+---------------
+
+.. py:class:: Connection
+
+   Bases: :py:obj:`Protocol`
+
+
+   A database connection object as defined in PEP 249 <https://peps.python.org/pep-0249/>_.
+
+   .. seealso::
+
+       The `connection object <https://peps.python.org/pep-0249/#connection-objects>`_
+
+
+
+   .. py:attribute:: autocommit
+      :type:  bool
+
+
+   .. py:method:: close() -> None
+
+
+   .. py:method:: commit() -> None
+
+
+   .. py:method:: rollback() -> None
+
+
+   .. py:method:: cursor() -> basis.persistence._cursor.Cursor
+
+
+.. py:class:: Connector(credentials, configuration)
+
+   Connector is a factory class which provides a connection object.
+   It either creates a new one or select one from connection pool.
+
+
+   .. py:method:: get_connection() -> basis.persistence._connection.Connection
+      :async:
+
+
+
+   .. py:method:: get_pooled_connection() -> basis.persistence._connection.Connection
+      :async:
+
+
+
+   .. py:property:: credentials
+
+
+   .. py:property:: configuration
+
+

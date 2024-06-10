@@ -1,0 +1,80 @@
+basis.utilities.periods
+=======================
+
+.. py:module:: basis.utilities.periods
+
+.. autoapi-nested-parse::
+
+   This module contains functions to work with date and time periods.
+
+   e.g. Get
+   - every monday this year
+   - days of current month
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   basis.utilities.periods.period
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   basis.utilities.periods.Resolution
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   basis.utilities.periods.between
+
+
+Module Contents
+---------------
+
+.. py:class:: Resolution
+
+   Bases: :py:obj:`enum.StrEnum`
+
+
+   Enum where members are also (and must be) strings
+
+
+   .. py:attribute:: WEEKS
+
+
+   .. py:attribute:: DAYS
+
+
+   .. py:attribute:: HOURS
+
+
+   .. py:attribute:: MINUTES
+
+
+   .. py:attribute:: MILISECONDS
+
+
+   .. py:attribute:: MICROSECONDS
+
+
+.. py:function:: between(start: datetime.datetime, end: datetime.datetime, step: int = 1, resolution: Resolution = Resolution.DAYS) -> Iterator[datetime.datetime]
+
+   Generate datetime units between start and end datetime.
+
+   :param start: The start :class:`datetime` value.
+   :param end: The end :class:`datetime` value.
+   :param step: The :class:`timedelta` resolution step value (can be negative).
+   :param resolution: The :class:`timedelta` resolution e.g  days or hours.
+
+
+.. py:data:: period
+
